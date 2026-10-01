@@ -12,7 +12,7 @@
 
   // Configuration
   const GROQ_CONFIG = {
-    apiKey: window.GROQ_API_KEY || localStorage.getItem('GROQ_API_KEY') || '',
+    getApiKey: () => window.GROQ_API_KEY || localStorage.getItem('GROQ_API_KEY') || '',
     primaryModel: 'openai/gpt-oss-120b',
     fallbackModel: 'openai/gpt-oss-20b',
     directEndpoint: 'https://api.groq.com/openai/v1/chat/completions',
@@ -77,6 +77,9 @@
           </div>
         </div>
         <div class="xplore-chat-controls">
+          <button class="xplore-chat-control-btn" id="xploreConfigKeyBtn" title="Set Groq API Key">
+            <i class="fa-solid fa-key"></i>
+          </button>
           <button class="xplore-chat-control-btn" id="xploreClearChatBtn" title="Clear Conversation">
             <i class="fa-solid fa-rotate-right"></i>
           </button>
@@ -284,6 +287,8 @@
   async function queryAI(userText) {
     const pageName = window.location.pathname.split('/').pop() || 'dashboard.html';
 
+    let backendErrorDetail = null;
+
     // 1st attempt: Call Flask backend endpoint
     try {
       const response = await fetch(GROQ_CONFIG.backendEndpoint, {
@@ -296,11 +301,13 @@
         })
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success && data.reply) {
-          return data.reply;
-        }
+      const data = await response.json().catch(() => null);
+      if (response.ok && data && data.success && data.reply) {
+        return data.reply;
+      }
+      if (data && data.message) {
+        backendErrorDetail = data.message;
+        console.warn('Backend chatbot notice:', data.message);
       }
     } catch (backendErr) {
       console.warn('Backend chatbot endpoint unavailable, falling back directly to Groq API:', backendErr);
@@ -321,14 +328,25 @@ Keep answers concise, structured, professional, and friendly with formatting (bo
     });
     messages.push({ role: 'user', content: userText });
 
+    const activeKey = GROQ_CONFIG.getApiKey();
+    if (!activeKey) {
+      throw new Error(
+        'Groq API Key not found on server or browser.<br><br>' +
+        '👉 <strong>To activate the chatbot:</strong><br>' +
+        '1. <strong>On Render (Recommended):</strong> Add <code>GROQ_API_KEY</code> under Render Dashboard → Environment tab.<br>' +
+        '2. <strong>Or click the 🔑 key icon</strong> at the top right of this chat window to paste your key now.'
+      );
+    }
+
     const modelsToTry = [GROQ_CONFIG.primaryModel, GROQ_CONFIG.fallbackModel, 'qwen/qwen3.8-27b'];
+    let lastDirectError = null;
 
     for (const model of modelsToTry) {
       try {
         const directRes = await fetch(GROQ_CONFIG.directEndpoint, {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${GROQ_CONFIG.apiKey}`,
+            'Authorization': `Bearer ${activeKey}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -339,18 +357,21 @@ Keep answers concise, structured, professional, and friendly with formatting (bo
           })
         });
 
-        if (directRes.ok) {
-          const directData = await directRes.json();
-          if (directData.choices && directData.choices[0] && directData.choices[0].message) {
-            return directData.choices[0].message.content;
-          }
+        const directData = await directRes.json().catch(() => null);
+        if (directRes.ok && directData && directData.choices && directData.choices[0] && directData.choices[0].message) {
+          return directData.choices[0].message.content;
+        }
+
+        if (directData && directData.error) {
+          lastDirectError = directData.error.message || JSON.stringify(directData.error);
         }
       } catch (err) {
+        lastDirectError = err.message;
         console.warn(`Groq model ${model} failed, trying fallback:`, err);
       }
     }
 
-    throw new Error('All AI endpoints are currently busy or unavailable. Please check your internet connection and try again.');
+    throw new Error(lastDirectError || backendErrorDetail || 'AI services are currently busy or unavailable. Please verify API key.');
   }
 
   // 8. Handle Send Message Flow
@@ -425,6 +446,28 @@ Keep answers concise, structured, professional, and friendly with formatting (bo
     triggerBtn.addEventListener('click', () => toggleChat());
     tooltip.addEventListener('click', () => toggleChat(true));
     if (closeBtn) closeBtn.addEventListener('click', () => toggleChat(false));
+
+    // Configure Groq API Key
+    const configKeyBtn = document.getElementById('xploreConfigKeyBtn');
+    if (configKeyBtn) {
+      configKeyBtn.addEventListener('click', () => {
+        const cur = GROQ_CONFIG.getApiKey();
+        const inputKey = prompt(
+          'Enter your Groq API Key (starts with gsk_):\n\nTip: You can also permanently set GROQ_API_KEY in Render Dashboard > Environment Variables.',
+          cur
+        );
+        if (inputKey !== null) {
+          const clean = inputKey.trim();
+          if (clean) {
+            localStorage.setItem('GROQ_API_KEY', clean);
+            alert('Groq API Key saved successfully in your browser! You can now chat with XploreAI.');
+          } else {
+            localStorage.removeItem('GROQ_API_KEY');
+            alert('Browser Groq API Key removed.');
+          }
+        }
+      });
+    }
 
     // Clear Chat
     if (clearBtn) {
