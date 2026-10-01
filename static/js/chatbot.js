@@ -81,9 +81,6 @@
           </div>
         </div>
         <div class="xplore-chat-controls">
-          <button class="xplore-chat-control-btn" id="xploreConfigKeyBtn" title="Set Groq API Key">
-            <i class="fa-solid fa-key"></i>
-          </button>
           <button class="xplore-chat-control-btn" id="xploreClearChatBtn" title="Clear Conversation">
             <i class="fa-solid fa-rotate-right"></i>
           </button>
@@ -450,28 +447,6 @@ Keep answers concise, structured, professional, and friendly with formatting (bo
     triggerBtn.addEventListener('click', () => toggleChat());
     tooltip.addEventListener('click', () => toggleChat(true));
     if (closeBtn) closeBtn.addEventListener('click', () => toggleChat(false));
-
-    // Configure Groq API Key
-    const configKeyBtn = document.getElementById('xploreConfigKeyBtn');
-    if (configKeyBtn) {
-      configKeyBtn.addEventListener('click', () => {
-        const cur = GROQ_CONFIG.getApiKey();
-        const inputKey = prompt(
-          'Enter your Groq API Key (starts with gsk_):\n\nTip: You can also permanently set GROQ_API_KEY in Render Dashboard > Environment Variables.',
-          cur
-        );
-        if (inputKey !== null) {
-          const clean = inputKey.trim();
-          if (clean) {
-            localStorage.setItem('GROQ_API_KEY', clean);
-            alert('Groq API Key saved successfully in your browser! You can now chat with XploreAI.');
-          } else {
-            localStorage.removeItem('GROQ_API_KEY');
-            alert('Browser Groq API Key removed.');
-          }
-        }
-      });
-    }
 
     // Clear Chat
     if (clearBtn) {
