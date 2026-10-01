@@ -109,12 +109,13 @@ def create_app():
 # Create and initialize
 app = create_app()
 
+# Initialize database tables and seed sample data on startup
+try:
+    init_db()
+except Exception as ex:
+    print(f"[Warning] DB initialization: {ex}")
+
 if __name__ == '__main__':
-    # Initialize database tables and seed sample data
-    try:
-        init_db()
-    except Exception as ex:
-        print(f"[Warning] DB initialization: {ex}")
 
     print(f"\n=======================================================")
     print(f" Tourism Footfall & Revenue Analytics API Server")
