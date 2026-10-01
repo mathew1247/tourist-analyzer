@@ -740,18 +740,98 @@ function syncHeaderProfileUI(profile) {
  * Setup Global UI Handlers (Mobile Sidebar, User Dropdown, Logout)
  */
 document.addEventListener('DOMContentLoaded', () => {
-  // Mobile Sidebar Toggle
+  // 1. Mobile Sidebar & Responsive Navigation Handler
   const mobileToggle = document.querySelector('.mobile-toggle');
   const sidebar = document.querySelector('.sidebar');
-  if (mobileToggle && sidebar) {
-    mobileToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      sidebar.classList.toggle('open');
+  
+  if (sidebar) {
+    // Ensure Backdrop element exists in DOM
+    let backdrop = document.querySelector('.sidebar-backdrop');
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.className = 'sidebar-backdrop';
+      document.body.appendChild(backdrop);
+    }
+
+    // Ensure accessible close button exists inside sidebar
+    const brandContainer = sidebar.querySelector('.sidebar-brand');
+    let closeBtn = sidebar.querySelector('.sidebar-close-btn');
+    if (!closeBtn && brandContainer) {
+      closeBtn = document.createElement('button');
+      closeBtn.className = 'sidebar-close-btn';
+      closeBtn.setAttribute('aria-label', 'Close menu');
+      closeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+      brandContainer.appendChild(closeBtn);
+    }
+
+    const openSidebar = () => {
+      sidebar.classList.add('open');
+      backdrop.classList.add('show');
+      document.body.classList.add('sidebar-open');
+      if (mobileToggle) mobileToggle.setAttribute('aria-expanded', 'true');
+    };
+
+    const closeSidebar = () => {
+      sidebar.classList.remove('open');
+      backdrop.classList.remove('show');
+      document.body.classList.remove('sidebar-open');
+      if (mobileToggle) mobileToggle.setAttribute('aria-expanded', 'false');
+    };
+
+    if (mobileToggle) {
+      mobileToggle.setAttribute('aria-haspopup', 'true');
+      mobileToggle.setAttribute('aria-expanded', 'false');
+      mobileToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (sidebar.classList.contains('open')) {
+          closeSidebar();
+        } else {
+          openSidebar();
+        }
+      });
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeSidebar();
+      });
+    }
+
+    backdrop.addEventListener('click', () => {
+      closeSidebar();
     });
 
+    // Close when clicking outside
     document.addEventListener('click', (e) => {
-      if (!sidebar.contains(e.target) && !mobileToggle.contains(e.target)) {
-        sidebar.classList.remove('open');
+      if (sidebar.classList.contains('open')) {
+        if (!sidebar.contains(e.target) && (!mobileToggle || !mobileToggle.contains(e.target))) {
+          closeSidebar();
+        }
+      }
+    });
+
+    // Close when an item is selected
+    sidebar.querySelectorAll('.nav-item, .nav-logout').forEach((item) => {
+      item.addEventListener('click', () => {
+        if (window.innerWidth <= 1023) {
+          closeSidebar();
+        }
+      });
+    });
+
+    // Keyboard accessibility: Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+        if (mobileToggle) mobileToggle.focus();
+      }
+    });
+
+    // Window resize handler: clean up state when resizing to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 1024 && sidebar.classList.contains('open')) {
+        closeSidebar();
       }
     });
   }

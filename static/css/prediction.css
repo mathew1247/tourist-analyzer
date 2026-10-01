@@ -22,6 +22,7 @@
   padding: 4px;
   border-radius: var(--pill-radius);
   border: 1px solid var(--border-light);
+  max-width: 100%;
 }
 
 .prediction-tab-btn {
@@ -34,6 +35,7 @@
   border: none;
   cursor: pointer;
   transition: all var(--transition-fast);
+  white-space: nowrap;
 }
 
 .prediction-tab-btn:hover {
@@ -66,13 +68,22 @@
 }
 
 .chart-card-prediction {
-  height: 350px;
+  min-height: 320px;
+  height: clamp(300px, 45vh, 370px);
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .prediction-breakdown-card {
   margin-top: 24px;
+  overflow: hidden;
+}
+
+.prediction-breakdown-card .data-table th,
+.prediction-breakdown-card .data-table td {
+  white-space: nowrap;
 }
 
 .prediction-insight-banner {
@@ -87,13 +98,90 @@
   box-shadow: var(--shadow-card);
 }
 
-@media (max-width: 992px) {
+/* --------------------------------------------------------------------------
+   Responsive Breakpoints - Prediction Page
+   -------------------------------------------------------------------------- */
+@media (max-width: 1023px) {
   .prediction-grid-row {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .prediction-insight-banner {
     flex-direction: column;
     align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .prediction-controls-card {
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .prediction-period-tabs {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+
+  .prediction-period-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .prediction-tab-btn {
+    flex: 1;
+    text-align: center;
+    padding: 7px 12px;
+    font-size: 0.8rem;
+  }
+
+  .chart-card-prediction {
+    min-height: 280px;
+    height: clamp(280px, 42vh, 330px);
+    padding: 16px;
+  }
+
+  .prediction-insight-banner {
+    padding: 18px 16px;
+  }
+
+  .prediction-insight-banner .insight-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .prediction-insight-banner > div:last-child {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .prediction-insight-banner > div:last-child .btn {
+    flex: 1 1 auto;
+    min-width: 130px;
+  }
+}
+
+@media (max-width: 479px) {
+  .prediction-disclaimer {
+    width: 100%;
+    font-size: 0.78rem;
+  }
+
+  .prediction-period-tabs {
+    display: flex;
+  }
+
+  .prediction-tab-btn {
+    padding: 6px 10px;
+    font-size: 0.76rem;
   }
 }

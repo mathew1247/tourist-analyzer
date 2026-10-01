@@ -161,3 +161,76 @@
   font-weight: 700;
   color: var(--text-navy);
 }
+
+.records-table-card .data-table th,
+.records-table-card .data-table td {
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Breakpoints - Records Page
+   -------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .filter-bar-card {
+    padding: 16px;
+    margin-bottom: 18px;
+  }
+
+  .filters-left {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .table-search-input {
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .filter-select {
+    flex: 1 1 calc(50% - 6px);
+    min-width: 120px;
+    font-size: 0.84rem;
+  }
+
+  .records-footer {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    padding: 14px 16px;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .page-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 0.88rem;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  #editRecordModal .form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 479px) {
+  .filter-select {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  #resetFiltersBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}

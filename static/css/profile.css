@@ -137,12 +137,54 @@
   margin-top: 4px;
 }
 
-@media (max-width: 992px) {
+/* --------------------------------------------------------------------------
+   Responsive Breakpoints - Profile Page
+   -------------------------------------------------------------------------- */
+@media (max-width: 1023px) {
   .profile-layout-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .profile-card-left,
+  .profile-edit-card,
+  .account-info-card {
+    padding: 24px;
+  }
+
+  .account-meta-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .profile-card-left,
+  .profile-edit-card,
+  .account-info-card {
+    padding: 20px 16px;
+    border-radius: var(--card-radius-sm);
   }
 
   .account-meta-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .profile-avatar-large-wrap {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile-name-display {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .profile-card-left,
+  .profile-edit-card,
+  .account-info-card {
+    padding: 16px 12px;
   }
 }

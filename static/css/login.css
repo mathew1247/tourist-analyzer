@@ -244,11 +244,14 @@
   text-decoration: underline;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
+/* --------------------------------------------------------------------------
+   Responsive Breakpoints - Authentication
+   -------------------------------------------------------------------------- */
+@media (max-width: 1023px) {
   .login-container {
     grid-template-columns: 1fr;
     max-width: 480px;
+    min-height: auto;
   }
 
   .login-left {
@@ -256,6 +259,73 @@
   }
 
   .login-right {
-    padding: 36px 24px;
+    padding: 40px 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .login-page-body {
+    padding: 16px 12px;
+    align-items: center;
+  }
+
+  .login-container {
+    border-radius: 18px;
+    width: 100%;
+    margin: 0;
+  }
+
+  .login-right {
+    padding: 32px 20px;
+  }
+
+  .login-header {
+    margin-bottom: 22px;
+  }
+
+  .login-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .form-control {
+    font-size: 15px;
+    height: 44px;
+  }
+
+  .btn-login-submit {
+    padding: 12px;
+    font-size: 0.95rem;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 479px) {
+  .login-right {
+    padding: 26px 16px;
+  }
+
+  .login-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .auth-tab-btn {
+    padding: 7px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 374px) {
+  .login-page-body {
+    padding: 10px 8px;
+  }
+
+  .login-right {
+    padding: 20px 12px;
+  }
+
+  .login-header h1 {
+    font-size: 1.3rem;
   }
 }

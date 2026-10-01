@@ -347,12 +347,15 @@
 }
 
 .scorecard-table-wrap {
+  width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   margin-top: 14px;
 }
 
 .scorecard-table {
   width: 100%;
+  min-width: 660px;
   border-collapse: separate;
   border-spacing: 0;
   font-size: 0.88rem;
@@ -368,6 +371,7 @@
   padding: 12px 16px;
   border-bottom: 2px solid var(--border-light);
   text-align: left;
+  white-space: nowrap;
 }
 
 .scorecard-table td {
@@ -375,6 +379,7 @@
   border-bottom: 1px solid var(--border-subtle);
   color: var(--text-navy);
   vertical-align: middle;
+  white-space: nowrap;
 }
 
 .scorecard-table tr:hover td {
@@ -442,32 +447,130 @@
   line-height: 1.5;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1200px) {
+/* --------------------------------------------------------------------------
+   Responsive Breakpoints - Analytics Intelligence
+   -------------------------------------------------------------------------- */
+@media (max-width: 1280px) {
   .analytics-kpi-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
+
   .analytics-primary-grid,
   .analytics-secondary-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
+
   .season-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-  .analytics-insights-grid {
-    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
 
-@media (max-width: 640px) {
-  .analytics-kpi-grid {
-    grid-template-columns: 1fr;
+@media (min-width: 768px) and (max-width: 1023px) {
+  .analytics-hero-bar {
+    padding: 18px 20px;
   }
-  .season-grid {
-    grid-template-columns: 1fr;
+
+  .analytics-insights-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
+}
+
+@media (max-width: 767px) {
   .analytics-hero-bar {
     flex-direction: column;
     align-items: flex-start;
+    padding: 16px;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .analytics-title-group h1 {
+    font-size: 1.3rem;
+  }
+
+  .analytics-toolbar {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .quarter-pills {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    padding: 3px;
+    scrollbar-width: none;
+  }
+
+  .quarter-pills::-webkit-scrollbar {
+    display: none;
+  }
+
+  .quarter-pill {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .analytics-kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .akpi-card {
+    padding: 16px 18px;
+  }
+
+  .season-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .analytics-insights-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .scorecard-table-card {
+    padding: 16px;
+  }
+
+  .analytics-card {
+    padding: 18px 16px;
+  }
+
+  .analytics-chart-container {
+    min-height: 260px;
+    height: clamp(260px, 42vh, 320px) !important;
+  }
+}
+
+@media (max-width: 479px) {
+  .analytics-toolbar select {
+    width: 100% !important;
+  }
+
+  .analytics-toolbar a.btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .analytics-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .season-stats-row {
+    gap: 10px;
+  }
+
+  .season-stat-val {
+    font-size: 1rem;
   }
 }

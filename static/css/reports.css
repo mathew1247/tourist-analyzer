@@ -171,9 +171,17 @@
   }
 }
 
-@media (max-width: 1024px) {
+/* --------------------------------------------------------------------------
+   Responsive Breakpoints - Reports Page
+   -------------------------------------------------------------------------- */
+@media (max-width: 1023px) {
   .reports-layout-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .report-paper-card {
+    padding: 28px 24px;
   }
 
   .report-summary-metrics {
@@ -181,12 +189,66 @@
   }
 }
 
-@media (max-width: 640px) {
-  .report-summary-metrics {
-    grid-template-columns: 1fr;
+@media (max-width: 767px) {
+  .report-paper-card {
+    padding: 20px 16px;
+    border-radius: var(--card-radius-sm);
   }
 
+  .report-doc-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+  }
+
+  .report-doc-title {
+    font-size: 1.25rem;
+  }
+
+  .report-summary-metrics {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .report-metric-tile {
+    padding: 12px 14px;
+  }
+
+  .report-metric-value {
+    font-size: 1.2rem;
+  }
+
+  .report-actions-bar {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-top: 24px;
+    padding-top: 16px;
+  }
+
+  .report-actions-bar .btn {
+    width: 100%;
+  }
+
+  .report-config-card {
+    padding: 18px 16px;
+  }
+
+  .report-type-option {
+    padding: 10px 14px;
+  }
+}
+
+@media (max-width: 479px) {
   .report-paper-card {
-    padding: 20px;
+    padding: 16px 12px;
+  }
+
+  .report-period-badge {
+    font-size: 0.8rem;
+    padding: 4px 10px;
   }
 }
