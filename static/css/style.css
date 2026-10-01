@@ -950,6 +950,12 @@ img, svg, video, canvas, audio, iframe {
   color: var(--warning);
 }
 
+.badge-danger {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+}
+
 /* --------------------------------------------------------------------------
    Pagination
    -------------------------------------------------------------------------- */

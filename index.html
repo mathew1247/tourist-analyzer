@@ -6,8 +6,12 @@
   <meta http-equiv="refresh" content="0; url=templates/login.html">
   <title>XploreElite - Tourism Footfall & Revenue Analytics</title>
   <script>
-    // Redirect to login or dashboard
-    window.location.href = "templates/login.html";
+    // Redirect to dashboard if authenticated session exists, otherwise to login
+    if (sessionStorage.getItem('auth_token')) {
+      window.location.href = "templates/dashboard.html";
+    } else {
+      window.location.href = "templates/login.html";
+    }
   </script>
 </head>
 <body style="font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f8fafc;">

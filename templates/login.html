@@ -78,7 +78,7 @@
                 <input type="checkbox" id="rememberMe">
                 <span>Remember me</span>
               </label>
-              <a href="#" class="forgot-link" onclick="alert('Please contact your platform administrator or use your registered email to reset.'); return false;">Forgot Password?</a>
+              <a href="#" class="forgot-link" id="linkForgotPassword">Forgot Password?</a>
             </div>
 
             <button type="submit" class="btn btn-primary btn-login-submit" id="loginBtn">
@@ -86,10 +86,41 @@
               <i class="fa-solid fa-arrow-right" style="margin-left: 6px;"></i>
             </button>
 
+            <!-- Quick One-Click Sign In Options -->
+            <div class="quick-login-pills" style="margin-top: 14px; padding: 10px 12px; background: #f8fafc; border-radius: 12px; border: 1px solid var(--border-light); display: flex; flex-direction: column; gap: 8px;">
+              <span style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Quick 1-Click Sign In:</span>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-outline btn-xs" id="quickLoginJack" style="font-size: 0.8rem; padding: 6px 12px; border-radius: 20px; background: #fff;">
+                  <i class="fa-solid fa-user-check" style="color: var(--primary); margin-right: 4px;"></i> jack@gmail.com
+                </button>
+                <button type="button" class="btn btn-outline btn-xs" id="quickLoginAdmin" style="font-size: 0.8rem; padding: 6px 12px; border-radius: 20px; background: #fff;">
+                  <i class="fa-solid fa-shield-halved" style="color: #3b82f6; margin-right: 4px;"></i> Admin User
+                </button>
+              </div>
+            </div>
+
             <div class="auth-switch-prompt">
               Don't have an account yet? <a class="auth-switch-link" id="linkToRegister">Create one now</a>
             </div>
           </form>
+
+          <!-- Inline Password Reset Box -->
+          <div id="resetPasswordContainer" style="display: none; margin-top: 18px; padding: 16px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 14px;">
+            <div style="font-weight: 700; color: #1e3a8a; margin-bottom: 6px; font-size: 0.95rem;">
+              <i class="fa-solid fa-key" style="margin-right: 6px;"></i> Reset Account Password
+            </div>
+            <p style="font-size: 0.82rem; color: #1e40af; margin-bottom: 12px;">Enter your registered email and your new password.</p>
+            <div class="form-group" style="margin-bottom: 10px;">
+              <input type="text" id="resetEmail" class="form-control" placeholder="Your registered email or username" style="background: #fff; font-size: 0.88rem;">
+            </div>
+            <div class="form-group" style="margin-bottom: 12px;">
+              <input type="password" id="resetNewPassword" class="form-control" placeholder="New password (min 6 characters)" style="background: #fff; font-size: 0.88rem;">
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button type="button" class="btn btn-primary btn-sm" id="btnSubmitReset">Update & Sign In</button>
+              <button type="button" class="btn btn-outline btn-sm" id="btnCancelReset">Cancel</button>
+            </div>
+          </div>
         </div>
 
         <!-- Register Form Container -->
