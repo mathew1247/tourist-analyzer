@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const regPassword = document.getElementById('regPassword');
 
   // Quick Login & Reset Elements
-  const quickJack = document.getElementById('quickLoginJack');
   const quickAdmin = document.getElementById('quickLoginAdmin');
   const linkForgot = document.getElementById('linkForgotPassword');
   const resetContainer = document.getElementById('resetPasswordContainer');
@@ -35,15 +34,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnSubmitReset = document.getElementById('btnSubmitReset');
   const btnCancelReset = document.getElementById('btnCancelReset');
 
-  // Restore saved email and password on page load for effortless sign-in
-  const savedEmail = localStorage.getItem('saved_login_email') || 'jack@gmail.com';
-  const savedPassword = localStorage.getItem('saved_login_password') || 'password123';
+  // Purge any stale jack@gmail.com saved credentials from previous sessions
+  if (localStorage.getItem('saved_login_email') === 'jack@gmail.com') {
+    localStorage.removeItem('saved_login_email');
+    localStorage.removeItem('saved_login_password');
+  }
 
-  if (emailInput && !emailInput.value) {
+  // Restore saved email and password on page load for effortless sign-in
+  const savedEmail = localStorage.getItem('saved_login_email') || '';
+  const savedPassword = localStorage.getItem('saved_login_password') || '';
+
+  if (emailInput && !emailInput.value && savedEmail) {
     emailInput.value = savedEmail;
     if (rememberCheckbox) rememberCheckbox.checked = true;
   }
-  if (passwordInput && !passwordInput.value) {
+  if (passwordInput && !passwordInput.value && savedPassword) {
     passwordInput.value = savedPassword;
   }
 
@@ -59,8 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Tab Switchers
-  function switchToSignIn() {
-    hideAlert();
+  function switchToSignIn(keepAlert = false) {
+    if (!keepAlert) hideAlert();
     if (resetContainer) resetContainer.style.display = 'none';
     if (tabSignIn) tabSignIn.classList.add('active');
     if (tabSignUp) tabSignUp.classList.remove('active');
@@ -79,22 +84,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (regFullName) regFullName.focus();
   }
 
-  if (tabSignIn) tabSignIn.addEventListener('click', switchToSignIn);
+  if (tabSignIn) tabSignIn.addEventListener('click', () => switchToSignIn(false));
   if (tabSignUp) tabSignUp.addEventListener('click', switchToRegister);
   if (linkToRegister) linkToRegister.addEventListener('click', switchToRegister);
-  if (linkToLogin) linkToLogin.addEventListener('click', switchToSignIn);
+  if (linkToLogin) linkToLogin.addEventListener('click', () => switchToSignIn(false));
 
   // ----------------------------------------------------
   // Quick 1-Click Login Shortcuts
   // ----------------------------------------------------
-  if (quickJack) {
-    quickJack.addEventListener('click', () => {
-      if (emailInput) emailInput.value = 'jack@gmail.com';
-      if (passwordInput) passwordInput.value = localStorage.getItem('saved_login_password') || 'password123';
-      if (loginForm) loginForm.requestSubmit();
-    });
-  }
-
   if (quickAdmin) {
     quickAdmin.addEventListener('click', () => {
       if (emailInput) emailInput.value = 'admin@xploreelite.com';
@@ -182,6 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ----------------------------------------------------
+  // ----------------------------------------------------
   // Sign In Submission (Real-Time Database Verification)
   // ----------------------------------------------------
   if (loginForm) {
@@ -205,10 +203,21 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (!password) {
-        // Automatically check if a saved password exists
-        const cached = localStorage.getItem('saved_login_password') || 'password123';
-        password = cached;
-        if (passwordInput) passwordInput.value = password;
+        // Automatically check if a saved password exists for this user
+        const savedEmail = localStorage.getItem('saved_login_email') || '';
+        if (savedEmail && email.toLowerCase() === savedEmail.toLowerCase()) {
+          password = localStorage.getItem('saved_login_password') || '';
+          if (passwordInput) passwordInput.value = password;
+        }
+      }
+
+      if (!password) {
+        if (passwordInput) {
+          passwordInput.classList.add('is-invalid');
+          passwordInput.focus();
+        }
+        showAlert('Please enter your account password.', 'danger');
+        return;
       }
 
       const submitBtn = document.getElementById('loginBtn');
@@ -227,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         showAlert('Credentials verified! Loading your dashboard...', 'success');
-        showToast('Login successful!', 'success');
+        showToast('Login successful! Redirecting...', 'success');
 
         setTimeout(() => {
           window.location.href = 'dashboard.html';
@@ -250,7 +259,6 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       hideAlert();
 
-      let isValid = true;
       const fullName = regFullName.value.trim();
       const email = regEmail.value.trim();
       const phone = regPhone.value.trim() || '+91 98765 43210';
@@ -293,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
           password
         });
 
-        // 1. Pre-fill the Sign In form and persistent cache with the new credentials
+        // Pre-fill the Sign In form and persistent cache with the new credentials
         localStorage.setItem('saved_login_email', email);
         localStorage.setItem('saved_login_password', password);
 
@@ -301,26 +309,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (passwordInput) passwordInput.value = password;
         if (rememberCheckbox) rememberCheckbox.checked = true;
 
-        showAlert(`Account created successfully! Logging you in with ${email}...`, 'success');
-        showToast('Account registered successfully!', 'success');
-
         if (registerBtn) {
           registerBtn.disabled = false;
           registerBtn.innerHTML = originalText;
         }
 
-        // 2. Smoothly switch to the Sign In tab so credentials are visible
-        switchToSignIn();
+        showAlert(`Account created successfully! Loading your dashboard with ${email}...`, 'success');
+        showToast('Account registered successfully! Redirecting...', 'success');
 
-        // 3. Immediately complete authentication and proceed to dashboard
-        setTimeout(async () => {
-          try {
-            await TourismAPI.login(email, password);
-            window.location.href = 'dashboard.html';
-          } catch (loginErr) {
-            window.location.href = 'dashboard.html';
-          }
-        }, 400);
+        // Immediately complete authentication and proceed to dashboard
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 500);
       } catch (err) {
         if (registerBtn) {
           registerBtn.disabled = false;

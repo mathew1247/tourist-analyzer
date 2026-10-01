@@ -1,5 +1,12 @@
 import os
+import sys
 from pathlib import Path
+
+# Add project root to sys.path so backend can be imported regardless of working directory
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 from flask import Flask, jsonify, send_from_directory, redirect
 from flask_cors import CORS
 
@@ -68,6 +75,10 @@ def create_app():
     @app.route('/templates/<path:filename>')
     def serve_template_page(filename):
         return send_from_directory(TEMPLATES_FOLDER, filename)
+
+    @app.route('/<string:page>.html')
+    def serve_root_html(page):
+        return send_from_directory(TEMPLATES_FOLDER, f"{page}.html")
 
     # ----------------------------------------------------------------------
     # Global JSON Error Handlers (Ensures APIs never return HTML errors)

@@ -92,6 +92,17 @@ class DictConnectionWrapper:
         self.close()
 
 
+def check_mysql_port(host, port, timeout=0.2):
+    """Quickly probe if the MySQL port is actually accepting connections to avoid long socket hangs."""
+    import socket
+    try:
+        s = socket.create_connection((host, int(port)), timeout=timeout)
+        s.close()
+        return True
+    except (socket.timeout, ConnectionRefusedError, OSError):
+        return False
+
+
 def get_db_connection():
     """
     Establish and return a database connection.
@@ -101,21 +112,26 @@ def get_db_connection():
     global _use_mysql
 
     if _use_mysql is not False and MYSQL_AVAILABLE:
-        try:
-            conn = mysql.connector.connect(
-                host=Config.DB_HOST,
-                port=Config.DB_PORT,
-                database=Config.DB_NAME,
-                user=Config.DB_USER,
-                password=Config.DB_PASSWORD,
-                connection_timeout=1
-            )
-            _use_mysql = True
-            return conn
-        except MySQLError as err:
+        if not check_mysql_port(Config.DB_HOST, Config.DB_PORT):
             if _use_mysql is None:
-                print(f"[Database] MySQL connection notice: {err}. Using local database fallback for immediate execution.")
+                print(f"[Database] MySQL server not reachable on {Config.DB_HOST}:{Config.DB_PORT}. Using local SQLite database for instant execution.")
             _use_mysql = False
+        else:
+            try:
+                conn = mysql.connector.connect(
+                    host=Config.DB_HOST,
+                    port=Config.DB_PORT,
+                    database=Config.DB_NAME,
+                    user=Config.DB_USER,
+                    password=Config.DB_PASSWORD,
+                    connection_timeout=1
+                )
+                _use_mysql = True
+                return conn
+            except MySQLError as err:
+                if _use_mysql is None:
+                    print(f"[Database] MySQL connection notice: {err}. Using local database fallback for immediate execution.")
+                _use_mysql = False
 
     # SQLite fallback
     conn = sqlite3.connect(SQLITE_DB_PATH)

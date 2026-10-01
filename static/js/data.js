@@ -69,24 +69,13 @@ const SEED_USERS = [
   {
     id: 2,
     fullName: 'Admin User',
-    username: 'jackkk',
+    username: 'admin',
     email: 'admin@xploreelite.com',
     phone: '+91 98765 43210',
     password: 'admin123',
     role: 'Administrator',
     companyName: 'XploreElite Tourism Analytics Ltd.',
     accountCreated: 'January 15, 2024'
-  },
-  {
-    id: 4,
-    fullName: 'jackk',
-    username: 'jackk',
-    email: 'jack@gmail.com',
-    phone: '744925004',
-    password: 'password123',
-    role: 'Administrator',
-    companyName: 'XploreElite Tourism Analytics Ltd.',
-    accountCreated: 'October 1, 2026'
   }
 ];
 
@@ -99,8 +88,11 @@ function initStore() {
     localStorage.setItem('registered_users', JSON.stringify(SEED_USERS));
   } else {
     try {
-      const existing = JSON.parse(localStorage.getItem('registered_users') || '[]');
-      let updated = false;
+      let existing = JSON.parse(localStorage.getItem('registered_users') || '[]');
+      // Remove any previously stored jack@gmail.com accounts
+      const beforeLen = existing.length;
+      existing = existing.filter(u => !u.email || u.email.toLowerCase() !== 'jack@gmail.com');
+      let updated = existing.length !== beforeLen;
       for (const su of SEED_USERS) {
         if (!existing.some(u => (u.email && u.email.toLowerCase() === su.email.toLowerCase()) || (u.username && u.username.toLowerCase() === su.username.toLowerCase()))) {
           existing.push(su);
@@ -109,6 +101,10 @@ function initStore() {
       }
       if (updated) localStorage.setItem('registered_users', JSON.stringify(existing));
     } catch (e) {}
+  }
+  if (localStorage.getItem('saved_login_email') === 'jack@gmail.com') {
+    localStorage.removeItem('saved_login_email');
+    localStorage.removeItem('saved_login_password');
   }
   if (!localStorage.getItem('user_profile')) {
     const defaultProfile = {
@@ -131,7 +127,9 @@ initStore();
 // Automatically point to Flask API backend (port 5000) when running from another static port or file:///
 const API_BASE = (typeof window !== 'undefined' && window.location.port === '5000')
   ? ''
-  : 'http://127.0.0.1:5000';
+  : (typeof window !== 'undefined' && window.location.hostname === 'localhost')
+    ? 'http://localhost:5000'
+    : 'http://127.0.0.1:5000';
 
 const FETCH_CREDENTIALS = (typeof window !== 'undefined' && window.location.protocol === 'file:')
   ? 'omit'
@@ -156,14 +154,18 @@ const TourismAPI = {
 
     let backendUser = null;
 
-    // 1. Try Backend REST API login first
+    // 1. Try Backend REST API login first with quick timeout
     try {
+      const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      const timeoutId = controller ? setTimeout(() => controller.abort(), 2000) : null;
       const res = await fetch(`${API_BASE}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: FETCH_CREDENTIALS,
+        signal: controller ? controller.signal : undefined,
         body: JSON.stringify({ email: rawId, password: pwd })
       });
+      if (timeoutId) clearTimeout(timeoutId);
       if (res.ok) {
         const json = await res.json();
         if (json && json.success) {
@@ -171,7 +173,7 @@ const TourismAPI = {
         }
       }
     } catch (e) {
-      console.warn('Backend login connection issue, falling back to local credentials store:', e);
+      console.warn('Backend login connection notice, falling back to local credentials store:', e);
     }
 
     // If backend authenticated successfully
@@ -197,7 +199,7 @@ const TourismAPI = {
       // Keep local registered_users cache synchronized
       try {
         let users = JSON.parse(localStorage.getItem('registered_users') || '[]');
-        const idx = users.findIndex(u => u.email && u.email.toLowerCase() === profile.email.toLowerCase());
+        const idx = users.findIndex(u => u.email && u.email.toLowerCase() === (profile.email || '').toLowerCase());
         if (idx >= 0) {
           users[idx] = { ...users[idx], ...profile, password: pwd };
         } else {
@@ -220,7 +222,11 @@ const TourismAPI = {
       users = [];
     }
 
-    const matchedLocal = users.find(u => {
+    // Search in reverse order so newly registered users take precedence over older seeds
+    const reversedUsers = [...users].reverse();
+
+    // 2a. First look for exact candidate matches
+    let candidates = reversedUsers.filter(u => {
       const uEmail = (u.email || '').toLowerCase().trim();
       const uUser = (u.username || '').toLowerCase().trim();
       const uName = (u.fullName || '').toLowerCase().trim();
@@ -232,11 +238,49 @@ const TourismAPI = {
         uName === idClean ||
         uUser.replace(/\s+/g, '') === idNoSpace ||
         uName.replace(/\s+/g, '') === idNoSpace ||
-        (idDigits.length >= 7 && uPhone.includes(idDigits)) ||
-        uEmail.startsWith(idClean) ||
-        uUser.startsWith(idClean)
+        (idDigits.length >= 7 && uPhone.includes(idDigits))
       );
     });
+
+    // 2b. If no exact candidate found, allow prefix match on username or email
+    if (candidates.length === 0) {
+      candidates = reversedUsers.filter(u => {
+        const uEmail = (u.email || '').toLowerCase().trim();
+        const uUser = (u.username || '').toLowerCase().trim();
+        const uName = (u.fullName || '').toLowerCase().trim();
+        return (
+          uEmail.startsWith(idClean) ||
+          uUser.startsWith(idClean) ||
+          uName.startsWith(idClean)
+        );
+      });
+    }
+
+    // 2c. Among all matching candidates, find the one that matches the password
+    let matchedLocal = candidates.find(u => !u.password || u.password === pwd);
+
+    // If no candidate matched the password, pick the primary candidate to evaluate password error
+    if (!matchedLocal && candidates.length > 0) {
+      matchedLocal = candidates[0];
+    }
+
+    // 2d. Fallback: Check if credentials match the most recently registered session in localStorage
+    if (!matchedLocal) {
+      const savedEmail = (localStorage.getItem('saved_login_email') || '').toLowerCase().trim();
+      const savedPwd = (localStorage.getItem('saved_login_password') || '').trim();
+      if (savedEmail && (savedEmail === idClean || idClean.startsWith(savedEmail) || savedEmail.startsWith(idClean)) && savedPwd === pwd) {
+        matchedLocal = {
+          id: Date.now(),
+          fullName: localStorage.getItem('auth_user_name') || 'Administrator',
+          username: localStorage.getItem('auth_user_name') || 'Admin',
+          email: savedEmail,
+          password: savedPwd,
+          phone: '+91 98765 43210',
+          companyName: 'XploreElite Tourism Analytics Ltd.',
+          role: 'Administrator'
+        };
+      }
+    }
 
     if (matchedLocal) {
       // Validate password
@@ -305,10 +349,12 @@ const TourismAPI = {
       if (matchIdx >= 0) {
         users[matchIdx] = { ...users[matchIdx], ...localAccount };
       } else {
-        users.push(localAccount);
+        // Place new accounts at the front for immediate priority
+        users.unshift(localAccount);
       }
       localStorage.setItem('registered_users', JSON.stringify(users));
       localStorage.setItem('saved_login_email', email);
+      localStorage.setItem('saved_login_password', password);
     } catch (e) {
       console.warn('Could not save to localStorage registered_users:', e);
     }
@@ -319,13 +365,16 @@ const TourismAPI = {
     sessionStorage.setItem('auth_token', 'token_' + Date.now());
     sessionStorage.setItem('auth_user', email);
 
-    // 3. Attempt to sync to backend database (SQLite / MySQL)
+    // 3. Attempt to sync to backend database (SQLite / MySQL) with quick timeout
     let backendResult = null;
     try {
+      const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      const timeoutId = controller ? setTimeout(() => controller.abort(), 2000) : null;
       const res = await fetch(`${API_BASE}/api/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: FETCH_CREDENTIALS,
+        signal: controller ? controller.signal : undefined,
         body: JSON.stringify({
           fullName,
           username,
@@ -335,6 +384,7 @@ const TourismAPI = {
           companyName
         })
       });
+      if (timeoutId) clearTimeout(timeoutId);
       if (res.ok) {
         backendResult = await res.json();
         const userData = backendResult.user || backendResult.data;
@@ -344,7 +394,7 @@ const TourismAPI = {
           // Update ID in registered_users
           try {
             let users = JSON.parse(localStorage.getItem('registered_users') || '[]');
-            const idx = users.findIndex(u => u.email.toLowerCase() === email);
+            const idx = users.findIndex(u => u.email && u.email.toLowerCase() === email);
             if (idx >= 0) {
               users[idx].id = userData.id;
               localStorage.setItem('registered_users', JSON.stringify(users));
@@ -838,6 +888,10 @@ const TourismAPI = {
     return payload;
   }
 };
+
+if (typeof window !== 'undefined') {
+  window.TourismAPI = TourismAPI;
+}
 
 /**
  * Format Currency in Indian Rupee format (e.g. ₹ 32,75,000)
