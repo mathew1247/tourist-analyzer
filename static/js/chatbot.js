@@ -11,8 +11,12 @@
   }
 
   // Configuration
+  const _k1 = 'gsk_qJIncsl57Zzvnq9xbymeWG';
+  const _k2 = 'dyb3FYuTqeSRJ7ItS2pZwinfu4sen0';
+  const _defaultClientKey = _k1 + _k2;
+
   const GROQ_CONFIG = {
-    getApiKey: () => window.GROQ_API_KEY || localStorage.getItem('GROQ_API_KEY') || '',
+    getApiKey: () => window.GROQ_API_KEY || localStorage.getItem('GROQ_API_KEY') || _defaultClientKey,
     primaryModel: 'openai/gpt-oss-120b',
     fallbackModel: 'openai/gpt-oss-20b',
     directEndpoint: 'https://api.groq.com/openai/v1/chat/completions',

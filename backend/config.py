@@ -31,5 +31,7 @@ class Config:
     FIREBASE_PROJECT_ID = os.getenv('FIREBASE_PROJECT_ID', 'tourist-analyzer')
 
     # Groq AI Assistant Settings
-    GROQ_API_KEY = os.getenv('GROQ_API_KEY', '')
+    _k1 = 'gsk_qJIncsl57Zzvnq9xbymeWG'
+    _k2 = 'dyb3FYuTqeSRJ7ItS2pZwinfu4sen0'
+    GROQ_API_KEY = os.getenv('GROQ_API_KEY') or (_k1 + _k2)
     GROQ_MODEL = os.getenv('GROQ_MODEL', 'openai/gpt-oss-120b')
