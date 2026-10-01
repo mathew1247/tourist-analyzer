@@ -140,7 +140,7 @@
 /* --------------------------------------------------------------------------
    Responsive Breakpoints - Profile Page
    -------------------------------------------------------------------------- */
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
   .profile-layout-grid {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -158,7 +158,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .profile-card-left,
   .profile-edit-card,
   .account-info-card {
@@ -179,12 +179,22 @@
   .profile-name-display {
     font-size: 1.2rem;
   }
+
+  .profile-card-right .btn {
+    min-height: 44px;
+  }
 }
 
-@media (max-width: 479px) {
+@media (max-width: 480px) {
   .profile-card-left,
   .profile-edit-card,
   .account-info-card {
     padding: 16px 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .profile-name-display {
+    font-size: 1.1rem;
   }
 }

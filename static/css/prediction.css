@@ -101,7 +101,7 @@
 /* --------------------------------------------------------------------------
    Responsive Breakpoints - Prediction Page
    -------------------------------------------------------------------------- */
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
   .prediction-grid-row {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -114,7 +114,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .prediction-controls-card {
     padding: 16px;
     flex-direction: column;
@@ -139,6 +139,7 @@
     text-align: center;
     padding: 7px 12px;
     font-size: 0.8rem;
+    min-height: 38px;
   }
 
   .chart-card-prediction {
@@ -167,10 +168,11 @@
   .prediction-insight-banner > div:last-child .btn {
     flex: 1 1 auto;
     min-width: 130px;
+    min-height: 42px;
   }
 }
 
-@media (max-width: 479px) {
+@media (max-width: 480px) {
   .prediction-disclaimer {
     width: 100%;
     font-size: 0.78rem;
@@ -183,5 +185,17 @@
   .prediction-tab-btn {
     padding: 6px 10px;
     font-size: 0.76rem;
+    min-height: 36px;
+  }
+}
+
+@media (max-width: 375px) {
+  .prediction-controls-card {
+    padding: 12px;
+  }
+
+  .prediction-tab-btn {
+    padding: 6px 8px;
+    font-size: 0.72rem;
   }
 }

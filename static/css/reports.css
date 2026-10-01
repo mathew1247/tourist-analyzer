@@ -174,7 +174,7 @@
 /* --------------------------------------------------------------------------
    Responsive Breakpoints - Reports Page
    -------------------------------------------------------------------------- */
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
   .reports-layout-grid {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -189,7 +189,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .report-paper-card {
     padding: 20px 16px;
     border-radius: var(--card-radius-sm);
@@ -231,6 +231,7 @@
 
   .report-actions-bar .btn {
     width: 100%;
+    min-height: 42px;
   }
 
   .report-config-card {
@@ -238,11 +239,12 @@
   }
 
   .report-type-option {
-    padding: 10px 14px;
+    padding: 12px 14px;
+    min-height: 44px;
   }
 }
 
-@media (max-width: 479px) {
+@media (max-width: 480px) {
   .report-paper-card {
     padding: 16px 12px;
   }
@@ -250,5 +252,19 @@
   .report-period-badge {
     font-size: 0.8rem;
     padding: 4px 10px;
+  }
+
+  .report-doc-title {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .report-paper-card {
+    padding: 12px 8px;
+  }
+
+  .report-metric-tile {
+    padding: 10px;
   }
 }

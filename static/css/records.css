@@ -170,7 +170,7 @@
 /* --------------------------------------------------------------------------
    Responsive Breakpoints - Records Page
    -------------------------------------------------------------------------- */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .filter-bar-card {
     padding: 16px;
     margin-bottom: 18px;
@@ -190,7 +190,8 @@
   .filter-select {
     flex: 1 1 calc(50% - 6px);
     min-width: 120px;
-    font-size: 0.84rem;
+    font-size: 0.88rem;
+    min-height: 42px;
   }
 
   .records-footer {
@@ -204,11 +205,12 @@
   .pagination {
     flex-wrap: wrap;
     justify-content: center;
+    gap: 6px;
   }
 
   .page-btn {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     font-size: 0.88rem;
   }
 
@@ -223,7 +225,7 @@
   }
 }
 
-@media (max-width: 479px) {
+@media (max-width: 480px) {
   .filter-select {
     flex: 1 1 100%;
     width: 100%;
@@ -232,5 +234,16 @@
   #resetFiltersBtn {
     width: 100%;
     justify-content: center;
+    min-height: 42px;
+  }
+
+  .records-count-text {
+    font-size: 0.82rem;
+  }
+
+  .page-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 0.82rem;
   }
 }

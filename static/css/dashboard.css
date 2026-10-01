@@ -426,7 +426,7 @@
   }
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (min-width: 769px) and (max-width: 1024px) {
   .tv-hotels-card.full-width {
     padding: 20px;
   }
@@ -437,7 +437,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .tv-hotels-card.full-width {
     padding: 16px;
     border-radius: var(--card-radius-sm, 14px);
@@ -467,11 +467,13 @@
     flex-shrink: 0;
     padding: 6px 12px;
     font-size: 0.8rem;
+    min-height: 38px;
   }
 
   .tv-see-all {
     font-size: 0.82rem;
-    padding: 5px 12px;
+    padding: 6px 14px;
+    min-height: 38px;
   }
 
   .tv-cards-grid {
@@ -498,7 +500,7 @@
   }
 }
 
-@media (max-width: 479px) {
+@media (max-width: 480px) {
   .tv-cards-grid {
     grid-template-columns: 1fr;
     gap: 14px;
@@ -532,7 +534,22 @@
   .tv-btn-primary,
   .tv-btn-secondary {
     width: 100%;
-    padding: 11px;
+    padding: 12px;
     font-size: 0.88rem;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 375px) {
+  .tv-hotels-card.full-width {
+    padding: 12px;
+  }
+
+  .tv-section-title {
+    font-size: 1.1rem;
+  }
+
+  .tv-hotel-card {
+    height: 230px;
   }
 }

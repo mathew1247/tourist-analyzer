@@ -83,6 +83,8 @@ html {
   font-size: 14px;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
@@ -93,6 +95,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body.sidebar-open {
@@ -1315,60 +1319,12 @@ img, svg, video, canvas, audio, iframe {
   }
 }
 
-/* 3. Tablets (768px to 1023px) - Usable Navigation with Reduced Spacing */
-@media (min-width: 768px) and (max-width: 1023px) {
+/* 3. Tablets (<= 1024px: 1024px, 912px, 820px, 768px) - Full Off-canvas Hamburger Experience */
+@media (max-width: 1024px) {
   :root {
-    --sidebar-width: 210px;
-    --header-height: 66px;
+    --header-height: 64px;
   }
 
-  .sidebar {
-    width: var(--sidebar-width);
-    padding: 20px 12px;
-  }
-
-  .sidebar-brand {
-    padding: 4px 8px 20px 8px;
-  }
-
-  .nav-item {
-    padding: 10px 14px;
-    font-size: 0.88rem;
-    gap: 10px;
-  }
-
-  .nav-logout {
-    padding: 10px 14px;
-    font-size: 0.88rem;
-    gap: 10px;
-  }
-
-  .main-wrapper {
-    margin-left: var(--sidebar-width);
-  }
-
-  .top-header {
-    height: var(--header-height);
-    padding: 0 20px;
-  }
-
-  .header-pill {
-    display: none;
-  }
-
-  .page-container {
-    padding: 20px 18px 32px 18px;
-  }
-
-  /* Tablet Dashboard: 2x2 Metric Cards */
-  .metrics-row {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-}
-
-/* 4. Mobile Phones (approx 320px to 767px) - Off-canvas Hamburger Menu */
-@media (max-width: 767px) {
   .sidebar {
     position: fixed;
     top: 0;
@@ -1405,18 +1361,45 @@ img, svg, video, canvas, audio, iframe {
   }
 
   .top-header {
-    height: 60px;
+    height: var(--header-height);
+    padding: 0 18px;
+    gap: 12px;
+  }
+
+  .page-container {
+    padding: 20px 18px 32px 18px;
+  }
+
+  /* Tablet Dashboard: 2x2 Metric Cards */
+  .metrics-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+/* 4. Medium & Small Tablets / Large Phones (<= 768px) */
+@media (max-width: 768px) {
+  .top-header {
+    height: 58px;
     padding: 0 14px;
     gap: 8px;
   }
 
   .header-left {
-    gap: 10px;
+    gap: 8px;
     max-width: 100%;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .search-box {
+    max-width: 200px;
+    min-width: 0;
   }
 
   .header-right {
     gap: 8px;
+    flex-shrink: 0;
   }
 
   .user-profile-menu .user-name,
@@ -1435,7 +1418,7 @@ img, svg, video, canvas, audio, iframe {
   .page-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 14px;
+    gap: 12px;
     margin-bottom: 20px;
   }
 
@@ -1505,19 +1488,20 @@ img, svg, video, canvas, audio, iframe {
   }
 }
 
-/* 5. Small Mobile Phones (approx 320px to 479px) */
-@media (max-width: 479px) {
+/* 5. Mobile Phones (<= 576px) */
+@media (max-width: 576px) {
   .page-container {
-    padding: 12px 10px 24px 10px;
+    padding: 14px 12px 26px 12px;
   }
 
-  .top-header {
-    padding: 0 10px;
+  .search-box {
+    max-width: 150px;
   }
 
   .search-box input {
-    font-size: 0.84rem;
+    font-size: 0.85rem;
     padding: 8px 12px 8px 34px;
+    height: 38px;
   }
 
   .search-box i {
@@ -1530,7 +1514,7 @@ img, svg, video, canvas, audio, iframe {
   }
 
   .card {
-    padding: 16px;
+    padding: 18px 16px;
   }
 
   .card-header {
@@ -1545,22 +1529,41 @@ img, svg, video, canvas, audio, iframe {
 
   .btn {
     padding: 9px 16px;
-    font-size: 0.85rem;
+    font-size: 0.88rem;
+    min-height: 42px;
+  }
+
+  .form-control,
+  .form-select,
+  select,
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    font-size: 16px; /* Prevents auto-zoom on mobile Safari */
+    min-height: 44px;
   }
 }
 
-/* 6. Ultra-Compact Mobile Screens (320px to 374px) */
-@media (max-width: 374px) {
+/* 6. Small Mobile Phones (<= 480px, including 430px, 390px, 375px) */
+@media (max-width: 480px) {
   .page-container {
-    padding: 10px 8px 20px 8px;
+    padding: 12px 10px 24px 10px;
+  }
+
+  .top-header {
+    padding: 0 10px;
+  }
+
+  .search-box {
+    max-width: 130px;
   }
 
   .page-title-group h1 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
   }
 
   .metric-value {
-    font-size: 1.4rem;
+    font-size: 1.45rem;
   }
 
   .notification-btn {
@@ -1570,6 +1573,35 @@ img, svg, video, canvas, audio, iframe {
   .user-avatar {
     width: 32px;
     height: 32px;
+  }
+}
+
+/* 7. Ultra-Compact Mobile Screens (<= 375px down to 320px) */
+@media (max-width: 375px) {
+  .page-container {
+    padding: 10px 8px 20px 8px;
+  }
+
+  .search-box {
+    max-width: 105px;
+  }
+
+  .search-box input {
+    font-size: 0.78rem;
+    padding-left: 28px;
+  }
+
+  .search-box i {
+    left: 8px;
+    font-size: 0.78rem;
+  }
+
+  .page-title-group h1 {
+    font-size: 1.2rem;
+  }
+
+  .metric-value {
+    font-size: 1.35rem;
   }
 }
 

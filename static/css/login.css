@@ -244,10 +244,35 @@
   text-decoration: underline;
 }
 
+.mobile-brand-header {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.mobile-brand-header .brand-icon {
+  font-size: 26px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+}
+
+.mobile-brand-header .brand-name {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--text-navy);
+}
+
 /* --------------------------------------------------------------------------
    Responsive Breakpoints - Authentication
    -------------------------------------------------------------------------- */
 @media (max-width: 1023px) {
+  .mobile-brand-header {
+    display: flex;
+  }
+
   .login-container {
     grid-template-columns: 1fr;
     max-width: 480px;
@@ -259,7 +284,7 @@
   }
 
   .login-right {
-    padding: 40px 32px;
+    padding: 36px 28px;
   }
 }
 
