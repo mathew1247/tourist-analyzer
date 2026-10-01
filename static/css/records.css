@@ -1,0 +1,163 @@
+/* ==========================================================================
+   Tourism Records Page Styles - XploreElite
+   ========================================================================== */
+
+.filter-bar-card {
+  background-color: #ffffff;
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 24px;
+  margin-bottom: 24px;
+}
+
+.filters-flex-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filters-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.table-search-input {
+  min-width: 220px;
+  max-width: 300px;
+  position: relative;
+}
+
+.table-search-input input {
+  padding-left: 36px;
+  height: 40px;
+  border-radius: var(--pill-radius);
+}
+
+.table-search-input i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+}
+
+.filter-select {
+  height: 40px;
+  padding: 8px 14px;
+  border-radius: var(--pill-radius);
+  font-size: 0.88rem;
+  border: 1px solid var(--border-light);
+  color: var(--text-navy);
+  font-weight: 500;
+  background-color: #ffffff;
+}
+
+.records-table-card {
+  background-color: #ffffff;
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  padding: 0;
+}
+
+.records-table-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 24px;
+}
+
+.empty-state-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 16px auto;
+}
+
+.empty-state-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-navy);
+  margin-bottom: 6px;
+}
+
+.empty-state-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  max-width: 360px;
+  margin: 0 auto 20px auto;
+}
+
+.records-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.records-count-text {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.action-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-icon.view:hover {
+  background-color: var(--pastel-blue-bg);
+  color: var(--pastel-blue-accent);
+}
+
+/* Modal details */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.detail-item {
+  background-color: var(--bg-page);
+  padding: 12px 16px;
+  border-radius: var(--card-radius-sm);
+  border: 1px solid var(--border-light);
+}
+
+.detail-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.detail-val {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-navy);
+}

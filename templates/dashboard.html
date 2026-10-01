@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | XploreElite - Tourism Analytics Platform</title>
+  <meta name="description" content="Executive Travel & Tourism Intelligence Dashboard">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Master Styles & Harmonized Dashboard Styles -->
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/dashboard.css">
+</head>
+<body>
+
+  <!-- Unified App Container Matching All Other Pages -->
+  <div class="app-container">
+
+    <!-- 1. Master Left Sidebar Navigation -->
+    <aside class="sidebar">
+      <a href="dashboard.html" class="sidebar-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-compass"></i>
+        </div>
+        <div class="brand-name">XploreElite<sup>™</sup></div>
+      </a>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item active">
+          <i class="fa-solid fa-table-cells-large"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="add-data.html" class="nav-item">
+          <i class="fa-solid fa-plus"></i>
+          <span>Add Tourism Data</span>
+        </a>
+        <a href="records.html" class="nav-item">
+          <i class="fa-solid fa-database"></i>
+          <span>Records</span>
+        </a>
+        <a href="analytics.html" class="nav-item">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>Analytics</span>
+        </a>
+        <a href="prediction.html" class="nav-item">
+          <i class="fa-solid fa-arrow-trend-up"></i>
+          <span>Prediction</span>
+        </a>
+        <a href="reports.html" class="nav-item">
+          <i class="fa-solid fa-file-lines"></i>
+          <span>Reports</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <i class="fa-solid fa-user"></i>
+          <span>Profile</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="nav-logout logout-trigger">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- 2. Master Main Content Wrapper -->
+    <div class="main-wrapper">
+      <!-- Top Navigation Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="mobile-toggle" aria-label="Toggle Navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="globalSearch" placeholder="Search destinations, resorts, records..." autocomplete="off">
+          </div>
+        </div>
+
+        <div class="header-right">
+          <a href="tel:+919876543210" class="header-pill">
+            <div class="header-pill-icon">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <span>+91 98765 43210</span>
+          </a>
+
+          <a href="mailto:info@xploreelite.com" class="header-pill">
+            <div class="header-pill-icon">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <span>info@xploreelite.com</span>
+          </a>
+
+          <button class="notification-btn" aria-label="Notifications" onclick="showToast('Cloud Firestore & MySQL active and synchronized.', 'info')">
+            <i class="fa-regular fa-bell"></i>
+            <span class="notification-badge"></span>
+          </button>
+
+          <div class="user-profile-menu">
+            <img src="../static/images/admin.jpg" alt="Admin Avatar" class="user-avatar" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80'">
+            <span class="user-name">Admin</span>
+            <i class="fa-solid fa-chevron-down"></i>
+
+            <div class="user-dropdown">
+              <a href="profile.html"><i class="fa-regular fa-user"></i> Account Profile</a>
+              <a href="reports.html"><i class="fa-regular fa-file-lines"></i> Export Reports</a>
+              <hr style="border: none; border-top: 1px solid var(--border-subtle); margin: 4px 0;">
+              <button class="logout-trigger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- 3. Page Container Hosting Harmonized Dashboard -->
+      <main class="page-container">
+
+        <!-- Master Page Header Matching All Frontend Pages -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1 id="dashboardGreeting">Executive Tourism Dashboard <span class="greeting-icon">👋</span></h1>
+            <p>Real-time footfall monitoring, revenue yield, destination highlights, and verified database analytics.</p>
+          </div>
+
+          <div class="page-actions">
+            <a href="add-data.html" class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-plus"></i>
+              <span>Add Tourism Data</span>
+            </a>
+            <a href="records.html" class="btn btn-secondary btn-sm">
+              <i class="fa-solid fa-database"></i>
+              <span>View Records</span>
+            </a>
+            <a href="reports.html" class="btn btn-outline btn-sm">
+              <i class="fa-solid fa-file-export"></i>
+              <span>Export Report</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Master 4-Card Signature Pastel Metrics Row -->
+        <section class="metrics-row" style="margin-bottom: 24px;">
+          <!-- 1. Total Visitors (Pastel Red) -->
+          <div class="metric-card visitors">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <span class="metric-label">Total Footfall</span>
+              <div class="metric-icon-circle"><i class="fa-solid fa-users"></i></div>
+            </div>
+            <div class="metric-value" id="dashTotalVisitors">78,450</div>
+            <div class="metric-trend">
+              <span class="trend-badge trend-up"><i class="fa-solid fa-arrow-trend-up"></i> +14.2%</span>
+              <span class="trend-comparison">vs last season</span>
+            </div>
+          </div>
+
+          <!-- 2. Total Revenue (Pastel Green) -->
+          <div class="metric-card revenue">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <span class="metric-label">Gross Revenue</span>
+              <div class="metric-icon-circle"><i class="fa-solid fa-wallet"></i></div>
+            </div>
+            <div class="metric-value" id="dashTotalRevenue">₹ 1,28,45,000</div>
+            <div class="metric-trend">
+              <span class="trend-badge trend-up"><i class="fa-solid fa-arrow-trend-up"></i> +11.8%</span>
+              <span class="trend-comparison">annual growth</span>
+            </div>
+          </div>
+
+          <!-- 3. Monthly Avg Footfall (Pastel Blue) -->
+          <div class="metric-card avg-visitors">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <span class="metric-label">Monthly Average</span>
+              <div class="metric-icon-circle"><i class="fa-solid fa-chart-line"></i></div>
+            </div>
+            <div class="metric-value" id="dashAvgVisitors">6,537</div>
+            <div class="metric-trend">
+              <span class="trend-badge trend-up"><i class="fa-solid fa-circle-check"></i> Verified</span>
+              <span class="trend-comparison">active influx</span>
+            </div>
+          </div>
+
+          <!-- 4. Monthly Avg Yield (Pastel Amber) -->
+          <div class="metric-card avg-revenue">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <span class="metric-label">Avg Monthly Yield</span>
+              <div class="metric-icon-circle"><i class="fa-solid fa-coins"></i></div>
+            </div>
+            <div class="metric-value" id="dashAvgRevenue">₹ 10,70,416</div>
+            <div class="metric-trend">
+              <span class="trend-badge trend-up"><i class="fa-solid fa-arrow-trend-up"></i> +7.4%</span>
+              <span class="trend-comparison">healthy yield</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Extended Full-Width Hotels & Destinations Section (Directly from Database) -->
+        <div class="tv-hotels-card full-width">
+          <div class="tv-hotels-header">
+            <div>
+              <h2 class="tv-section-title">
+                <i class="fa-solid fa-map-location-dot" style="color: var(--primary); margin-right: 8px;"></i>
+                Hotels & Regional Destinations
+              </h2>
+              <p class="tv-section-desc">Click any regional destination below to view verified visitor footfall, gross revenue, and audit records from the database.</p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+              <div class="tv-hotels-tabs">
+                <button class="tv-tab-btn active" data-tab="all">All Destinations</button>
+                <button class="tv-tab-btn" data-tab="Hill Stations">Hill Stations</button>
+                <button class="tv-tab-btn" data-tab="Cultural & Heritage">Cultural & Heritage</button>
+                <button class="tv-tab-btn" data-tab="top">Top Footfall</button>
+              </div>
+
+              <a href="records.html" class="tv-see-all">
+                <span>View in Records</span>
+                <i class="fa-solid fa-chevron-right" style="font-size: 0.75rem;"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- 5 Real Database Destinations Grid -->
+          <div class="tv-cards-grid">
+            <!-- 1. Ooty -->
+            <div class="tv-hotel-card" data-dest="ooty" data-category="Hill Stations" data-visitors="8420" title="Click to inspect Ooty database metrics">
+              <img src="../static/images/ooty.jpg" alt="Ooty" class="tv-hotel-img">
+              <div class="tv-hotel-badge">Hill Stations</div>
+              <div class="tv-hotel-overlay">
+                <div class="tv-hotel-title">Ooty (Udhagamandalam)</div>
+                <div class="tv-hotel-location"><i class="fa-solid fa-location-dot"></i> Nilgiris, Tamil Nadu</div>
+                <div class="tv-hotel-meta">
+                  <div class="tv-meta-item">
+                    <i class="fa-solid fa-users"></i>
+                    <span class="dest-card-visitors" id="cardVis-ooty">8,420 visitors</span>
+                  </div>
+                  <div class="tv-meta-item">
+                    <i class="fa-solid fa-star star"></i>
+                    <span>4.8</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Munnar -->
+            <div class="tv-hotel-card" data-dest="munnar" data-category="Hill Stations" data-visitors="14400" title="Click to inspect Munnar database metrics">
+              <img src="../static/images/munnar.jpg" alt="Munnar" class="tv-hotel-img">
+              <div class="tv-hotel-badge">Hill Stations</div>
+              <div class="tv-hotel-overlay">
+                <div class="tv-hotel-title">Munnar Tea Sanctuary</div>
+                <div class="tv-hotel-location"><i class="fa-solid fa-location-dot"></i> Idukki, Kerala</div>
+                <div class="tv-hotel-meta">
+                  <div class="tv-meta-item">
+                    <i class="fa-solid fa-users"></i>
+                    <span class="dest-card-visitors" id="cardVis-munnar">14,400 visitors</span>
+                  </div>
+                  <div class="tv-meta-item">
+                    <i class="fa-solid fa-star star"></i>
+                    <span>4.9</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Kodaikanal -->
+            <div class="tv-hotel-card" data-dest="kodaikanal" data-category="Hill Stations" data-visitors="5760" title="Click to inspect Kodaikanal database metrics">
+              <img src="../static/images/kodaikanal.jpg" alt="Kodaikanal" class="tv-hotel-img">
+              <div class="tv-hotel-badge">Hill Stations</div>
+              <div class="tv-hotel-overlay">
+                <div class="tv-hotel-title">Kodaikanal Mist & Lake</div>
+                <div class="tv-hotel-location"><i class="fa-solid fa-location-dot"></i> Dindigul, Tamil Nadu</div>
+                <div class="tv-hotel-meta">
+                  <div class="tv-meta-item">
+                    <i class="fa-solid fa-users"></i>
+                    <span class="dest-card-visitors" id="cardVis-kodaikanal">5,760 visitors</span>
+                  </div>
+                  <div class="tv-meta-item">
+                    <i class="fa-solid fa-star star"></i>
+                    <span>4.6</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Coorg -->
+            <div class="tv-hotel-card" data-dest="coorg" data-category="Hill Stations" data-visitors="6980" title="Click to inspect Coorg database metrics">
+              <img src="../static/images/coorg.jpg" alt="Coorg" class="tv-hotel-img">
+              <div class="tv-hotel-badge">Hill Stations</div>
+              <div class="tv-hotel-overlay">
+                <div class="tv-hotel-title">Coorg (Kodagu Valley)</div>
+                <div class="tv-hotel-location"><i class="fa-solid fa-location-dot"></i> Kodagu, Karnataka</div>
+                <div class="tv-hotel-meta">
+                  <div class="tv-meta-item">
+                    <i class="fa-solid fa-users"></i>
+                    <span class="dest-card-visitors" id="cardVis-coorg">6,980 visitors</span>
+                  </div>
+                  <div class="tv-meta-item">
+                    <i class="fa-solid fa-star star"></i>
+                    <span>4.7</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Rameswaram -->
+            <div class="tv-hotel-card" data-dest="rameswaram" data-category="Cultural & Heritage" data-visitors="3210" title="Click to inspect Rameswaram database metrics">
+              <img src="../static/images/rameswaram.jpg" alt="Rameswaram" class="tv-hotel-img">
+              <div class="tv-hotel-badge">Cultural & Heritage</div>
+              <div class="tv-hotel-overlay">
+                <div class="tv-hotel-title">Rameswaram Island & Temple</div>
+                <div class="tv-hotel-location"><i class="fa-solid fa-location-dot"></i> Ramanathapuram, Tamil Nadu</div>
+                <div class="tv-hotel-meta">
+                  <div class="tv-meta-item">
+                    <i class="fa-solid fa-users"></i>
+                    <span class="dest-card-visitors" id="cardVis-rameswaram">3,210 visitors</span>
+                  </div>
+                  <div class="tv-meta-item">
+                    <i class="fa-solid fa-star star"></i>
+                    <span>4.8</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+  </div>
+
+  <!-- Interactive Destination Details Popup Modal (Matching Database Respect to Places) -->
+  <div class="tv-modal-backdrop" id="destinationModal">
+    <div class="tv-modal-card">
+      <button class="tv-modal-close-btn" onclick="closeDestinationModal()" aria-label="Close Modal">&times;</button>
+      
+      <div class="tv-modal-img-wrap">
+        <img src="" id="modalDestImg" alt="Destination Preview" class="tv-modal-img">
+        <span class="tv-modal-cat-badge" id="modalDestCategory">Hill Stations</span>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+        <h3 class="tv-modal-title" id="modalDestTitle">Destination Details</h3>
+      </div>
+      
+      <div class="tv-modal-location-row" id="modalDestLocation">
+        <i class="fa-solid fa-location-dot" style="color: var(--primary);"></i>
+        <span>Tamil Nadu, India</span>
+      </div>
+
+      <p class="tv-modal-desc" id="modalDestDesc"></p>
+
+      <!-- 4 Database Metrics Grid -->
+      <div class="tv-modal-stats-grid">
+        <div class="tv-modal-stat-box">
+          <div class="tv-modal-stat-lbl"><i class="fa-solid fa-users"></i> Certified Footfall</div>
+          <div class="tv-modal-stat-val" id="modalDestVisitors">—</div>
+        </div>
+        <div class="tv-modal-stat-box">
+          <div class="tv-modal-stat-lbl"><i class="fa-solid fa-wallet"></i> Gross Revenue</div>
+          <div class="tv-modal-stat-val" id="modalDestRevenue">—</div>
+        </div>
+        <div class="tv-modal-stat-box">
+          <div class="tv-modal-stat-lbl"><i class="fa-solid fa-chart-line"></i> Yield / Visitor</div>
+          <div class="tv-modal-stat-val" id="modalDestYield">—</div>
+        </div>
+        <div class="tv-modal-stat-box">
+          <div class="tv-modal-stat-lbl"><i class="fa-solid fa-calendar-check"></i> Peak Season</div>
+          <div class="tv-modal-stat-val" id="modalDestPeak">—</div>
+        </div>
+      </div>
+
+      <div class="tv-modal-source">
+        <i class="fa-solid fa-database" style="color: var(--primary);"></i>
+        <span>Verified historical & live data from Cloud Firestore & Tourism Analytics database</span>
+      </div>
+
+      <div class="tv-modal-actions">
+        <button class="tv-btn-primary" id="modalViewRecordsBtn">
+          <i class="fa-solid fa-table"></i> View in Records
+        </button>
+        <button class="tv-btn-secondary" id="modalAddDataBtn">
+          <i class="fa-solid fa-plus"></i> Add Tourism Data
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Application Logic & Toast Scripts -->
+  <script src="../static/js/data.js"></script>
+  <script src="../static/js/dashboard.js"></script>
+</body>
+</html>

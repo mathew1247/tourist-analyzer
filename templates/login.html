@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | XploreElite - Tourism Analytics Platform</title>
+  <meta name="description" content="Company/Admin Tourism Footfall and Revenue Analytics Platform. Sign in to manage tourism records, trends, and projections.">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Core Styles -->
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/login.css">
+</head>
+<body class="login-page-body">
+
+  <div class="login-container">
+    <!-- Left Hero & Branding Section -->
+    <div class="login-left">
+      <div class="login-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-compass"></i>
+        </div>
+        <div class="brand-name">XploreElite<sup>™</sup></div>
+      </div>
+
+      <div class="login-hero-content">
+        <div class="login-hero-img-wrap">
+          <img src="../static/images/login-hero.jpg" alt="Tourism Analytics Data" class="login-hero-img" id="loginHeroImg">
+        </div>
+        <h2>Tourism Analytics Platform</h2>
+        <p>Enterprise footfall intelligence, revenue monitoring, and strategic destination analytics for tourism boards and company administrators.</p>
+      </div>
+
+      <div class="login-features">
+        <div class="feature-pill"><i class="fa-solid fa-chart-line"></i> Visitor Footfall</div>
+        <div class="feature-pill"><i class="fa-solid fa-coins"></i> Revenue Forecast</div>
+        <div class="feature-pill"><i class="fa-solid fa-shield-halved"></i> Enterprise Secure</div>
+      </div>
+    </div>
+
+    <!-- Right Login Form Card -->
+    <div class="login-right">
+      <div class="login-card-inner">
+        <!-- Auth Tabs Switcher -->
+        <div class="auth-tabs" role="tablist">
+          <button type="button" class="auth-tab-btn active" id="tabSignIn">Sign In</button>
+          <button type="button" class="auth-tab-btn" id="tabSignUp">Create Account</button>
+        </div>
+
+        <!-- Alert Notification Box -->
+        <div id="loginAlert" class="badge" style="display: none; margin-bottom: 16px; padding: 10px 14px; width: 100%; text-align: left; font-size: 0.85rem; line-height: 1.4;">
+        </div>
+
+        <!-- Sign In Form Container -->
+        <div id="signInContainer">
+          <div class="login-header">
+            <h1 id="authTitle">Welcome Back</h1>
+            <p id="authSubtitle">Sign in with your registered credentials.</p>
+          </div>
+
+          <form id="loginForm" class="login-form" novalidate>
+            <div class="form-group">
+              <label for="email" class="form-label">Email or Username <span class="required">*</span></label>
+              <input type="text" id="email" class="form-control" placeholder="Enter your email or username" required autocomplete="username">
+              <div class="invalid-feedback">Please enter your registered email or username.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="password" class="form-label">Password <span class="required">*</span></label>
+              <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+              <div class="invalid-feedback">Please enter your account password.</div>
+            </div>
+
+            <div class="login-options">
+              <label class="remember-label">
+                <input type="checkbox" id="rememberMe">
+                <span>Remember me</span>
+              </label>
+              <a href="#" class="forgot-link" onclick="alert('Please contact your platform administrator or use your registered email to reset.'); return false;">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-login-submit" id="loginBtn">
+              <span>Sign In</span>
+              <i class="fa-solid fa-arrow-right" style="margin-left: 6px;"></i>
+            </button>
+
+            <div class="auth-switch-prompt">
+              Don't have an account yet? <a class="auth-switch-link" id="linkToRegister">Create one now</a>
+            </div>
+          </form>
+        </div>
+
+        <!-- Register Form Container -->
+        <div id="registerContainer" style="display: none;">
+          <div class="login-header">
+            <h1>Create Account</h1>
+            <p>Register as a new administrator in the database.</p>
+          </div>
+
+          <form id="registerForm" class="login-form" novalidate>
+            <div class="form-group">
+              <label for="regFullName" class="form-label">Full Name <span class="required">*</span></label>
+              <input type="text" id="regFullName" class="form-control" placeholder="e.g. Alexander Pierce" required>
+              <div class="invalid-feedback">Please enter your full name.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="regEmail" class="form-label">Email Address <span class="required">*</span></label>
+              <input type="email" id="regEmail" class="form-control" placeholder="e.g. user@xploreelite.com" required>
+              <div class="invalid-feedback">Please enter a valid email address.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="regPhone" class="form-label">Phone Number (Optional)</label>
+              <input type="tel" id="regPhone" class="form-control" placeholder="+91 98765 43210">
+            </div>
+
+            <div class="form-group">
+              <label for="regPassword" class="form-label">Password <span class="required">*</span></label>
+              <input type="password" id="regPassword" class="form-control" placeholder="Min. 6 characters" minlength="6" required autocomplete="new-password">
+              <div class="invalid-feedback">Password must be at least 6 characters.</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-login-submit" id="registerBtn">
+              <span>Create Account</span>
+              <i class="fa-solid fa-user-plus" style="margin-left: 6px;"></i>
+            </button>
+
+            <div class="auth-switch-prompt">
+              Already have an account? <a class="auth-switch-link" id="linkToLogin">Sign In</a>
+            </div>
+          </form>
+        </div>
+
+        <div class="login-footer-tag">
+          Tourism Analytics Management Platform
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared App JS -->
+  <script src="../static/js/data.js"></script>
+  <script src="../static/js/login.js"></script>
+</body>
+</html>

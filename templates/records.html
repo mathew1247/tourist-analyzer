@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tourism Records | XploreElite - Tourism Analytics Platform</title>
+  <meta name="description" content="View and manage historical tourism footfall and revenue records.">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Core & Page Styles -->
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/records.css">
+  <link rel="stylesheet" href="../static/css/forms.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar">
+      <a href="dashboard.html" class="sidebar-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-compass"></i>
+        </div>
+        <div class="brand-name">XploreElite<sup>™</sup></div>
+      </a>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <i class="fa-solid fa-table-cells-large"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="add-data.html" class="nav-item">
+          <i class="fa-solid fa-plus"></i>
+          <span>Add Tourism Data</span>
+        </a>
+        <a href="records.html" class="nav-item active">
+          <i class="fa-solid fa-database"></i>
+          <span>Records</span>
+        </a>
+        <a href="analytics.html" class="nav-item">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>Analytics</span>
+        </a>
+        <a href="prediction.html" class="nav-item">
+          <i class="fa-solid fa-arrow-trend-up"></i>
+          <span>Prediction</span>
+        </a>
+        <a href="reports.html" class="nav-item">
+          <i class="fa-solid fa-file-lines"></i>
+          <span>Reports</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <i class="fa-solid fa-user"></i>
+          <span>Profile</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="nav-logout logout-trigger">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      <!-- Top Navigation Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="mobile-toggle" aria-label="Toggle Navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="globalSearch" placeholder="Search anything..." autocomplete="off">
+          </div>
+        </div>
+
+        <div class="header-right">
+          <a href="tel:+919876543210" class="header-pill">
+            <div class="header-pill-icon">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <span>+91 98765 43210</span>
+          </a>
+
+          <a href="mailto:info@xploreelite.com" class="header-pill">
+            <div class="header-pill-icon">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <span>info@xploreelite.com</span>
+          </a>
+
+          <button class="notification-btn" aria-label="Notifications" onclick="showToast('All record synchronization up to date.', 'info')">
+            <i class="fa-regular fa-bell"></i>
+            <span class="notification-badge"></span>
+          </button>
+
+          <div class="user-profile-menu">
+            <img src="../static/images/admin.jpg" alt="Admin Avatar" class="user-avatar" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80'">
+            <span class="user-name">Admin</span>
+            <i class="fa-solid fa-chevron-down"></i>
+
+            <div class="user-dropdown">
+              <a href="profile.html"><i class="fa-regular fa-user"></i> Account Profile</a>
+              <a href="reports.html"><i class="fa-regular fa-file-lines"></i> Export Reports</a>
+              <hr style="border: none; border-top: 1px solid var(--border-subtle); margin: 4px 0;">
+              <button class="logout-trigger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Main Content Body -->
+      <main class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Tourism Records</h1>
+            <p>View and manage historical tourism data.</p>
+          </div>
+
+          <div class="page-actions">
+            <a href="add-data.html" class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-plus"></i>
+              <span>Add Tourism Data</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Filter Bar Card -->
+        <div class="filter-bar-card">
+          <div class="filters-flex-wrap">
+            <div class="filters-left">
+              <!-- Search -->
+              <div class="table-search-input">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="recordSearch" class="form-control" placeholder="Search records...">
+              </div>
+
+              <!-- Year Filter -->
+              <select id="yearFilter" class="filter-select">
+                <option value="all">All Years</option>
+                <option value="2025" selected>2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+              </select>
+
+              <!-- Month Filter -->
+              <select id="monthFilter" class="filter-select">
+                <option value="all">All Months</option>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+              </select>
+
+              <!-- Category Filter -->
+              <select id="categoryFilter" class="filter-select">
+                <option value="all">All Categories</option>
+                <option value="Beach Tourism">Beach Tourism</option>
+                <option value="Hill Stations">Hill Stations</option>
+                <option value="Cultural & Heritage">Cultural & Heritage</option>
+                <option value="Adventure">Adventure</option>
+                <option value="Others">Others</option>
+              </select>
+
+              <button type="button" id="resetFiltersBtn" class="btn btn-secondary btn-sm" title="Clear Filters">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span>Reset</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Records Table Card -->
+        <div class="records-table-card">
+          <div id="tableContentWrapper">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th>Year</th>
+                    <th>Visitors</th>
+                    <th>Revenue</th>
+                    <th>Category</th>
+                    <th>Created Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="recordsTableBody">
+                  <!-- Populated by records.js -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Table Footer with Pagination -->
+            <div class="records-footer">
+              <div class="records-count-text" id="recordsCountText">
+                Showing records...
+              </div>
+
+              <div class="pagination" id="recordsPagination">
+                <!-- Dynamically generated -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty State Container -->
+          <div id="emptyState" class="empty-state" style="display: none;">
+            <div class="empty-state-icon">
+              <i class="fa-solid fa-folder-open"></i>
+            </div>
+            <div class="empty-state-title">No tourism records found.</div>
+            <div class="empty-state-desc">Try modifying your search keywords or resetting active month and category filters.</div>
+            <a href="add-data.html" class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-plus"></i>
+              <span>Add New Record</span>
+            </a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- View Record Modal -->
+  <div class="modal-backdrop" id="viewRecordModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">Tourism Record Details</div>
+        <button class="modal-close" onclick="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <div>
+            <h3 id="viewModalMonthYear" style="font-size: 1.3rem; font-weight: 800; color: var(--text-navy);">Month Year</h3>
+            <span id="viewModalCategory" class="badge">Category</span>
+          </div>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-item">
+            <div class="detail-label">Total Visitors</div>
+            <div class="detail-val" id="viewModalVisitors">0</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-label">Total Revenue</div>
+            <div class="detail-val" id="viewModalRevenue" style="color: var(--primary);">₹ 0</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-label">Average Spend / Tourist</div>
+            <div class="detail-val" id="viewModalAvgSpend">₹ 0</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-label">Verification Date</div>
+            <div class="detail-val" id="viewModalCreated" style="font-size: 0.95rem;">-</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModals()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Record Modal -->
+  <div class="modal-backdrop" id="editRecordModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">Edit Tourism Record</div>
+        <button class="modal-close" onclick="closeModals()">&times;</button>
+      </div>
+      <form id="editRecordForm" onsubmit="handleEditFormSubmit(event)">
+        <div class="modal-body">
+          <input type="hidden" id="editRecordId">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="editMonth">Month <span class="required">*</span></label>
+              <select id="editMonth" class="form-select" required>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="editYear">Year <span class="required">*</span></label>
+              <select id="editYear" class="form-select" required>
+                <option value="2026">2026</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="editVisitors">Visitors <span class="required">*</span></label>
+              <input type="number" id="editVisitors" class="form-control" min="1" required>
+              <div class="invalid-feedback">Enter a positive visitor count.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="editRevenue">Revenue (₹) <span class="required">*</span></label>
+              <input type="number" id="editRevenue" class="form-control" min="1" required>
+              <div class="invalid-feedback">Enter a valid positive revenue figure.</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editCategory">Category</label>
+            <select id="editCategory" class="form-select">
+              <option value="Beach Tourism">Beach Tourism</option>
+              <option value="Hill Stations">Hill Stations</option>
+              <option value="Cultural & Heritage">Cultural & Heritage</option>
+              <option value="Adventure">Adventure</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModals()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-backdrop" id="deleteConfirmModal">
+    <div class="modal-card" style="max-width: 440px;">
+      <div class="modal-header">
+        <div class="modal-title" style="color: var(--danger);">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span>Confirm Record Deletion</span>
+        </div>
+        <button class="modal-close" onclick="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-navy); font-size: 0.95rem; margin-bottom: 8px;">
+          Are you sure you want to permanently delete this monthly tourism record?
+        </p>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">
+          This action will immediately update seasonal averages and dashboard metrics. This operation cannot be undone.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModals()">Cancel</button>
+        <button type="button" class="btn btn-primary" style="background-color: var(--danger);" onclick="executeDelete()">
+          <i class="fa-solid fa-trash-can"></i>
+          <span>Delete Record</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Scripts & Records Controller -->
+  <script src="../static/js/data.js"></script>
+  <script src="../static/js/records.js"></script>
+</body>
+</html>

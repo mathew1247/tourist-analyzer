@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Profile | XploreElite - Tourism Analytics Platform</title>
+  <meta name="description" content="Manage administrator credentials, contact information, and company permissions.">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Core & Page Styles -->
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/profile.css">
+  <link rel="stylesheet" href="../static/css/forms.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar">
+      <a href="dashboard.html" class="sidebar-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-compass"></i>
+        </div>
+        <div class="brand-name">XploreElite<sup>™</sup></div>
+      </a>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <i class="fa-solid fa-table-cells-large"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="add-data.html" class="nav-item">
+          <i class="fa-solid fa-plus"></i>
+          <span>Add Tourism Data</span>
+        </a>
+        <a href="records.html" class="nav-item">
+          <i class="fa-solid fa-database"></i>
+          <span>Records</span>
+        </a>
+        <a href="analytics.html" class="nav-item">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>Analytics</span>
+        </a>
+        <a href="prediction.html" class="nav-item">
+          <i class="fa-solid fa-arrow-trend-up"></i>
+          <span>Prediction</span>
+        </a>
+        <a href="reports.html" class="nav-item">
+          <i class="fa-solid fa-file-lines"></i>
+          <span>Reports</span>
+        </a>
+        <a href="profile.html" class="nav-item active">
+          <i class="fa-solid fa-user"></i>
+          <span>Profile</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="nav-logout logout-trigger">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      <!-- Top Navigation Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="mobile-toggle" aria-label="Toggle Navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="globalSearch" placeholder="Search anything..." autocomplete="off">
+          </div>
+        </div>
+
+        <div class="header-right">
+          <a href="tel:+919876543210" class="header-pill">
+            <div class="header-pill-icon">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <span>+91 98765 43210</span>
+          </a>
+
+          <a href="mailto:info@xploreelite.com" class="header-pill">
+            <div class="header-pill-icon">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <span>info@xploreelite.com</span>
+          </a>
+
+          <button class="notification-btn" aria-label="Notifications" onclick="showToast('Profile security verified.', 'info')">
+            <i class="fa-regular fa-bell"></i>
+            <span class="notification-badge"></span>
+          </button>
+
+          <div class="user-profile-menu">
+            <img src="../static/images/admin.jpg" alt="Admin Avatar" class="user-avatar" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80'">
+            <span class="user-name">Admin</span>
+            <i class="fa-solid fa-chevron-down"></i>
+
+            <div class="user-dropdown">
+              <a href="profile.html"><i class="fa-regular fa-user"></i> Account Profile</a>
+              <a href="reports.html"><i class="fa-regular fa-file-lines"></i> Export Reports</a>
+              <hr style="border: none; border-top: 1px solid var(--border-subtle); margin: 4px 0;">
+              <button class="logout-trigger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Main Content Body -->
+      <main class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Profile</h1>
+            <p>Manage your account information.</p>
+          </div>
+        </div>
+
+        <div class="profile-layout-grid">
+          <!-- Left Summary Card -->
+          <div class="profile-card-left">
+            <div class="profile-avatar-large-wrap">
+              <img src="../static/images/admin.jpg" alt="Admin Avatar" class="profile-avatar-large" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80'">
+              <div class="avatar-badge-online" title="Online Active"></div>
+            </div>
+
+            <div class="profile-name-display" id="profileDisplayName">Admin</div>
+            <div class="profile-role-badge" id="profileDisplayRole">Administrator</div>
+
+            <div class="profile-quick-stats">
+              <div class="quick-info-row">
+                <span class="quick-info-label">Email:</span>
+                <span class="quick-info-val" id="profileDisplayEmail">admin@xploreelite.com</span>
+              </div>
+              <div class="quick-info-row">
+                <span class="quick-info-label">Contact:</span>
+                <span class="quick-info-val" id="profileDisplayPhone">+91 98765 43210</span>
+              </div>
+              <div class="quick-info-row">
+                <span class="quick-info-label">Organization:</span>
+                <span class="quick-info-val" id="profileDisplayCompany">XploreElite Analytics</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Edit Form & Account Meta -->
+          <div class="profile-card-right">
+            <!-- Form Card -->
+            <div class="profile-edit-card">
+              <div class="card-header" style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border-light);">
+                <div>
+                  <div class="card-title">
+                    <i class="fa-regular fa-id-card" style="color: var(--primary);"></i>
+                    <span>Personal & Organization Details</span>
+                  </div>
+                  <div class="card-subtitle">Update administrator credentials and designated communication details.</div>
+                </div>
+
+                <div>
+                  <button type="button" id="editProfileToggleBtn" class="btn btn-outline btn-sm">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    <span>Edit Profile</span>
+                  </button>
+                </div>
+              </div>
+
+              <form id="profileForm">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="profFullName">Full Name <span class="required">*</span></label>
+                    <div class="input-with-icon">
+                      <i class="fa-regular fa-user"></i>
+                      <input type="text" id="profFullName" class="form-control" required disabled>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="profEmail">Email Address <span class="required">*</span></label>
+                    <div class="input-with-icon">
+                      <i class="fa-regular fa-envelope"></i>
+                      <input type="email" id="profEmail" class="form-control" required disabled>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="profPhone">Phone Number</label>
+                    <div class="input-with-icon">
+                      <i class="fa-solid fa-phone"></i>
+                      <input type="text" id="profPhone" class="form-control" disabled>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="profCompany">Company Name</label>
+                    <div class="input-with-icon">
+                      <i class="fa-regular fa-building"></i>
+                      <input type="text" id="profCompany" class="form-control" disabled>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="profRole">Role</label>
+                  <div class="input-with-icon">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <input type="text" id="profRole" class="form-control" disabled>
+                  </div>
+                </div>
+
+                <div class="form-actions-group" style="margin-top: 16px;">
+                  <button type="button" id="cancelProfileBtn" class="btn btn-secondary" style="display: none;">Cancel</button>
+                  <button type="submit" id="saveProfileBtn" class="btn btn-primary" style="display: none;">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Save Changes</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Additional Section: Account Information -->
+            <div class="account-info-card">
+              <div class="card-header" style="margin-bottom: 20px;">
+                <div class="card-title" style="font-size: 1.05rem;">
+                  <i class="fa-solid fa-shield-halved" style="color: var(--primary);"></i>
+                  <span>Account Information</span>
+                </div>
+              </div>
+
+              <div class="account-meta-grid">
+                <div class="account-meta-box">
+                  <div class="account-meta-label">Last Login</div>
+                  <div class="account-meta-value" id="profLastLogin">Today, 09:30 AM</div>
+                  <span style="font-size: 0.78rem; color: var(--success); font-weight: 600;">Secure HTTPS Session</span>
+                </div>
+
+                <div class="account-meta-box">
+                  <div class="account-meta-label">Account Created</div>
+                  <div class="account-meta-value" id="profCreated">January 15, 2024</div>
+                  <span style="font-size: 0.78rem; color: var(--text-muted);">Registered Company Org</span>
+                </div>
+
+                <div class="account-meta-box">
+                  <div class="account-meta-label">Access Level</div>
+                  <div class="account-meta-value" id="profAccessLevel">System Administrator</div>
+                  <span style="font-size: 0.78rem; color: var(--primary); font-weight: 600;">Full Read / Write / Export</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Shared Store & Profile Controller -->
+  <script src="../static/js/data.js"></script>
+  <script src="../static/js/profile.js"></script>
+</body>
+</html>

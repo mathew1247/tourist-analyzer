@@ -1,0 +1,148 @@
+/* ==========================================================================
+   Profile Management Styles - XploreElite
+   ========================================================================== */
+
+.profile-layout-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.profile-card-left {
+  background-color: #ffffff;
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-card);
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.profile-avatar-large-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 16px auto;
+}
+
+.profile-avatar-large {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffffff;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.1);
+}
+
+.avatar-badge-online {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--success);
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+}
+
+.profile-name-display {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-navy);
+  margin-bottom: 4px;
+}
+
+.profile-role-badge {
+  display: inline-block;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  padding: 4px 14px;
+  border-radius: var(--pill-radius);
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-bottom: 20px;
+}
+
+.profile-quick-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid var(--border-light);
+  padding-top: 20px;
+  text-align: left;
+}
+
+.quick-info-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+}
+
+.quick-info-label {
+  color: var(--text-muted);
+}
+
+.quick-info-val {
+  font-weight: 600;
+  color: var(--text-navy);
+}
+
+/* Right Edit Section */
+.profile-card-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profile-edit-card {
+  background-color: #ffffff;
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-card);
+  padding: 32px;
+}
+
+.account-info-card {
+  background-color: #ffffff;
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-card);
+  padding: 28px 32px;
+}
+
+.account-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.account-meta-box {
+  background-color: var(--bg-page);
+  padding: 16px;
+  border-radius: var(--card-radius-sm);
+  border: 1px solid var(--border-light);
+}
+
+.account-meta-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.account-meta-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-navy);
+  margin-top: 4px;
+}
+
+@media (max-width: 992px) {
+  .profile-layout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .account-meta-grid {
+    grid-template-columns: 1fr;
+  }
+}

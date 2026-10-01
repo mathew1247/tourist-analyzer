@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports | XploreElite - Tourism Analytics Platform</title>
+  <meta name="description" content="Generate and print official tourism performance, footfall, and revenue reports.">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Core & Page Styles -->
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/reports.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar">
+      <a href="dashboard.html" class="sidebar-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-compass"></i>
+        </div>
+        <div class="brand-name">XploreElite<sup>™</sup></div>
+      </a>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <i class="fa-solid fa-table-cells-large"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="add-data.html" class="nav-item">
+          <i class="fa-solid fa-plus"></i>
+          <span>Add Tourism Data</span>
+        </a>
+        <a href="records.html" class="nav-item">
+          <i class="fa-solid fa-database"></i>
+          <span>Records</span>
+        </a>
+        <a href="analytics.html" class="nav-item">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>Analytics</span>
+        </a>
+        <a href="prediction.html" class="nav-item">
+          <i class="fa-solid fa-arrow-trend-up"></i>
+          <span>Prediction</span>
+        </a>
+        <a href="reports.html" class="nav-item active">
+          <i class="fa-solid fa-file-lines"></i>
+          <span>Reports</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <i class="fa-solid fa-user"></i>
+          <span>Profile</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="nav-logout logout-trigger">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      <!-- Top Navigation Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="mobile-toggle" aria-label="Toggle Navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="globalSearch" placeholder="Search anything..." autocomplete="off">
+          </div>
+        </div>
+
+        <div class="header-right">
+          <a href="tel:+919876543210" class="header-pill">
+            <div class="header-pill-icon">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <span>+91 98765 43210</span>
+          </a>
+
+          <a href="mailto:info@xploreelite.com" class="header-pill">
+            <div class="header-pill-icon">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <span>info@xploreelite.com</span>
+          </a>
+
+          <button class="notification-btn" aria-label="Notifications" onclick="showToast('Report template library verified.', 'info')">
+            <i class="fa-regular fa-bell"></i>
+            <span class="notification-badge"></span>
+          </button>
+
+          <div class="user-profile-menu">
+            <img src="../static/images/admin.jpg" alt="Admin Avatar" class="user-avatar" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80'">
+            <span class="user-name">Admin</span>
+            <i class="fa-solid fa-chevron-down"></i>
+
+            <div class="user-dropdown">
+              <a href="profile.html"><i class="fa-regular fa-user"></i> Account Profile</a>
+              <a href="reports.html"><i class="fa-regular fa-file-lines"></i> Export Reports</a>
+              <hr style="border: none; border-top: 1px solid var(--border-subtle); margin: 4px 0;">
+              <button class="logout-trigger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Main Content Body -->
+      <main class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Reports</h1>
+            <p>Generate tourism performance reports.</p>
+          </div>
+        </div>
+
+        <!-- 2 Column Layout: Config Left, Report Paper Right -->
+        <div class="reports-layout-grid">
+          <!-- Configuration Card -->
+          <div class="report-config-card">
+            <div class="card-header" style="margin-bottom: 16px;">
+              <div class="card-title" style="font-size: 1.05rem;">
+                <i class="fa-solid fa-sliders" style="color: var(--primary);"></i>
+                <span>Report Parameters</span>
+              </div>
+            </div>
+
+            <!-- Report Type Options -->
+            <div class="form-group">
+              <label class="form-label">Report Type</label>
+              <div class="report-type-selector">
+                <label class="report-type-option selected">
+                  <input type="radio" name="reportType" value="Monthly Report" checked>
+                  <span class="report-type-label">Monthly Report</span>
+                </label>
+
+                <label class="report-type-option">
+                  <input type="radio" name="reportType" value="Yearly Report">
+                  <span class="report-type-label">Yearly Report</span>
+                </label>
+
+                <label class="report-type-option">
+                  <input type="radio" name="reportType" value="Revenue Analysis">
+                  <span class="report-type-label">Revenue Analysis</span>
+                </label>
+
+                <label class="report-type-option">
+                  <input type="radio" name="reportType" value="Visitor Analysis">
+                  <span class="report-type-label">Visitor Analysis</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Month Filter -->
+            <div class="form-group" id="reportMonthGroup">
+              <label class="form-label" for="reportMonth">Select Month</label>
+              <select id="reportMonth" class="form-select">
+                <option value="January" selected>January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+              </select>
+            </div>
+
+            <!-- Year Filter -->
+            <div class="form-group">
+              <label class="form-label" for="reportYear">Select Year</label>
+              <select id="reportYear" class="form-select">
+                <option value="2026">2026</option>
+                <option value="2025" selected>2025</option>
+                <option value="2024">2024</option>
+              </select>
+            </div>
+
+            <button type="button" id="generateReportBtn" class="btn btn-primary" style="width: 100%; margin-top: 14px;">
+              <i class="fa-solid fa-arrows-rotate"></i>
+              <span>Generate Report</span>
+            </button>
+          </div>
+
+          <!-- Report Preview Document (Printable) -->
+          <div class="report-paper-card" id="printableReportArea">
+            <!-- Header -->
+            <div class="report-doc-header">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                  <i class="fa-solid fa-compass" style="color: var(--primary); font-size: 1.2rem;"></i>
+                  <span style="font-weight: 800; font-size: 1.1rem; color: var(--text-navy);">XploreElite Tourism Analytics</span>
+                </div>
+                <div class="report-doc-title" id="repPreviewTitle">TOURISM ANALYTICS REPORT</div>
+                <div class="report-doc-sub" id="repPreviewGeneratedAt">Generated on verified system data</div>
+              </div>
+
+              <div class="report-period-badge" id="repPreviewPeriod">
+                January 2025
+              </div>
+            </div>
+
+            <!-- Summary Metrics Cards Grid -->
+            <div class="report-summary-metrics">
+              <div class="report-metric-tile">
+                <div class="report-metric-label">Total Visitors</div>
+                <div class="report-metric-value" id="repPreviewVisitors">3,200</div>
+              </div>
+
+              <div class="report-metric-tile">
+                <div class="report-metric-label">Total Revenue</div>
+                <div class="report-metric-value" id="repPreviewRevenue" style="color: var(--primary);">₹ 5,20,000</div>
+              </div>
+
+              <div class="report-metric-tile">
+                <div class="report-metric-label">Average Visitors</div>
+                <div class="report-metric-value" id="repPreviewAvgVisitors">3,200</div>
+              </div>
+
+              <div class="report-metric-tile">
+                <div class="report-metric-label">Average Revenue</div>
+                <div class="report-metric-value" id="repPreviewAvgRevenue">₹ 5,20,000</div>
+              </div>
+
+              <div class="report-metric-tile">
+                <div class="report-metric-label">Growth Rate</div>
+                <div class="report-metric-value" id="repPreviewGrowth" style="color: var(--success);">12%</div>
+              </div>
+
+              <div class="report-metric-tile">
+                <div class="report-metric-label">Peak Period</div>
+                <div class="report-metric-value" id="repPreviewPeak" style="font-size: 1.15rem;">January 2025</div>
+              </div>
+            </div>
+
+            <!-- Embedded Mini Chart -->
+            <div style="margin-bottom: 28px;">
+              <div style="font-weight: 700; color: var(--text-navy); margin-bottom: 12px; font-size: 0.95rem;">
+                <i class="fa-solid fa-chart-area" style="color: var(--primary); margin-right: 6px;"></i>
+                Comparative Footfall Trend Visual
+              </div>
+              <div style="height: 180px; position: relative; width: 100%;">
+                <canvas id="reportMiniChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Itemized Table Breakdown -->
+            <div style="margin-bottom: 24px;">
+              <div style="font-weight: 700; color: var(--text-navy); margin-bottom: 12px; font-size: 0.95rem;">
+                <i class="fa-solid fa-table-list" style="color: var(--primary); margin-right: 6px;"></i>
+                Certified Period Breakdown
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Period</th>
+                      <th>Total Visitors</th>
+                      <th>Gross Revenue</th>
+                      <th>Category</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="reportTableBreakdown">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Action Buttons: Print & Download PDF -->
+            <div class="report-actions-bar">
+              <button type="button" id="printReportBtn" class="btn btn-secondary">
+                <i class="fa-solid fa-print"></i>
+                <span>Print Report</span>
+              </button>
+
+              <button type="button" id="downloadPdfBtn" class="btn btn-primary">
+                <i class="fa-solid fa-file-pdf"></i>
+                <span>Download PDF</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Shared Store & Reports Controller -->
+  <script src="../static/js/data.js"></script>
+  <script src="../static/js/reports.js"></script>
+</body>
+</html>

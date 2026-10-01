@@ -1,0 +1,192 @@
+/* ==========================================================================
+   Reports Generator Styles - XploreElite
+   ========================================================================== */
+
+.reports-layout-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.report-config-card {
+  background-color: #ffffff;
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+}
+
+.report-type-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.report-type-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--card-radius-sm);
+  border: 1px solid var(--border-light);
+  background-color: var(--bg-page);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.report-type-option:hover {
+  border-color: var(--primary);
+  background-color: #ffffff;
+}
+
+.report-type-option.selected {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+.report-type-option input[type="radio"] {
+  accent-color: var(--primary);
+}
+
+.report-type-label {
+  font-weight: 600;
+  color: var(--text-navy);
+  font-size: 0.9rem;
+}
+
+/* Report Preview Document Paper Styling */
+.report-paper-card {
+  background-color: #ffffff;
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-card);
+  padding: 36px 40px;
+  position: relative;
+}
+
+.report-doc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--border-light);
+  margin-bottom: 28px;
+}
+
+.report-doc-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-navy);
+  letter-spacing: -0.5px;
+}
+
+.report-doc-sub {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.report-period-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  padding: 6px 14px;
+  border-radius: var(--pill-radius);
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.report-summary-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.report-metric-tile {
+  background-color: var(--bg-page);
+  border-radius: var(--card-radius-sm);
+  padding: 16px;
+  border: 1px solid var(--border-light);
+}
+
+.report-metric-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.report-metric-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-navy);
+  margin-top: 4px;
+}
+
+.report-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background-color: #ffffff !important;
+  }
+
+  .sidebar,
+  .top-header,
+  .report-config-card,
+  .report-actions-bar,
+  .page-header {
+    display: none !important;
+  }
+
+  .main-wrapper {
+    margin-left: 0 !important;
+  }
+
+  .page-container {
+    padding: 0 !important;
+  }
+
+  .reports-layout-grid {
+    display: block !important;
+  }
+
+  .report-paper-card {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .reports-layout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .report-summary-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .report-summary-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .report-paper-card {
+    padding: 20px;
+  }
+}

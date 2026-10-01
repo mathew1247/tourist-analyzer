@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Tourism Data | XploreElite - Tourism Analytics Platform</title>
+  <meta name="description" content="Enter monthly tourism footfall and revenue records for corporate analytics and reporting.">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Core & Page Styles -->
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/forms.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar">
+      <a href="dashboard.html" class="sidebar-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-compass"></i>
+        </div>
+        <div class="brand-name">XploreElite<sup>™</sup></div>
+      </a>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <i class="fa-solid fa-table-cells-large"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="add-data.html" class="nav-item active">
+          <i class="fa-solid fa-plus"></i>
+          <span>Add Tourism Data</span>
+        </a>
+        <a href="records.html" class="nav-item">
+          <i class="fa-solid fa-database"></i>
+          <span>Records</span>
+        </a>
+        <a href="analytics.html" class="nav-item">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>Analytics</span>
+        </a>
+        <a href="prediction.html" class="nav-item">
+          <i class="fa-solid fa-arrow-trend-up"></i>
+          <span>Prediction</span>
+        </a>
+        <a href="reports.html" class="nav-item">
+          <i class="fa-solid fa-file-lines"></i>
+          <span>Reports</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <i class="fa-solid fa-user"></i>
+          <span>Profile</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="nav-logout logout-trigger">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      <!-- Top Navigation Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="mobile-toggle" aria-label="Toggle Navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="globalSearch" placeholder="Search anything..." autocomplete="off">
+          </div>
+        </div>
+
+        <div class="header-right">
+          <a href="tel:+919876543210" class="header-pill">
+            <div class="header-pill-icon">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <span>+91 98765 43210</span>
+          </a>
+
+          <a href="mailto:info@xploreelite.com" class="header-pill">
+            <div class="header-pill-icon">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <span>info@xploreelite.com</span>
+          </a>
+
+          <button class="notification-btn" aria-label="Notifications" onclick="showToast('Notification center active.', 'info')">
+            <i class="fa-regular fa-bell"></i>
+            <span class="notification-badge"></span>
+          </button>
+
+          <div class="user-profile-menu">
+            <img src="../static/images/admin.jpg" alt="Admin Avatar" class="user-avatar" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80'">
+            <span class="user-name">Admin</span>
+            <i class="fa-solid fa-chevron-down"></i>
+
+            <div class="user-dropdown">
+              <a href="profile.html"><i class="fa-regular fa-user"></i> Account Profile</a>
+              <a href="reports.html"><i class="fa-regular fa-file-lines"></i> Export Reports</a>
+              <hr style="border: none; border-top: 1px solid var(--border-subtle); margin: 4px 0;">
+              <button class="logout-trigger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Main Content Body -->
+      <main class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <h1>Add Tourism Data</h1>
+            <p>Enter monthly tourism footfall and revenue information.</p>
+          </div>
+
+          <div class="page-actions">
+            <a href="records.html" class="btn btn-secondary btn-sm">
+              <i class="fa-solid fa-arrow-left"></i>
+              <span>Back to Records</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="form-layout-grid">
+          <!-- Main Form Card -->
+          <div class="card form-card">
+            <div class="card-header" style="border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px; margin-bottom: 24px;">
+              <div>
+                <div class="card-title">
+                  <i class="fa-solid fa-pen-nib" style="color: var(--primary);"></i>
+                  <span>Monthly Data Entry Form</span>
+                </div>
+                <div class="card-subtitle">All entries are audited and integrated into quarterly analytics.</div>
+              </div>
+            </div>
+
+            <form id="addDataForm" novalidate>
+              <!-- Row 1: Month & Year -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="monthSelect" class="form-label">Month <span class="required">*</span></label>
+                  <div class="input-with-icon">
+                    <i class="fa-regular fa-calendar"></i>
+                    <select id="monthSelect" class="form-select" required>
+                      <option value="">Select Month</option>
+                      <option value="January">January</option>
+                      <option value="February">February</option>
+                      <option value="March">March</option>
+                      <option value="April">April</option>
+                      <option value="May">May</option>
+                      <option value="June">June</option>
+                      <option value="July">July</option>
+                      <option value="August">August</option>
+                      <option value="September">September</option>
+                      <option value="October">October</option>
+                      <option value="November">November</option>
+                      <option value="December">December</option>
+                    </select>
+                  </div>
+                  <div class="invalid-feedback" id="monthError">Please select a valid month.</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="yearSelect" class="form-label">Year <span class="required">*</span></label>
+                  <div class="input-with-icon">
+                    <i class="fa-regular fa-calendar-days"></i>
+                    <select id="yearSelect" class="form-select" required>
+                      <option value="">Select Year</option>
+                      <option value="2026">2026</option>
+                      <option value="2025" selected>2025</option>
+                      <option value="2024">2024</option>
+                      <option value="2023">2023</option>
+                    </select>
+                  </div>
+                  <div class="invalid-feedback" id="yearError">Please select a valid year.</div>
+                </div>
+              </div>
+
+              <!-- Row 2: Visitors & Revenue -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="visitorsInput" class="form-label">Number of Visitors <span class="required">*</span></label>
+                  <div class="input-with-icon">
+                    <i class="fa-solid fa-users"></i>
+                    <input type="number" id="visitorsInput" class="form-control" placeholder="e.g. 4500" min="1" step="1" required>
+                  </div>
+                  <div class="form-helper">Total certified head-count/registered tourist arrivals.</div>
+                  <div class="invalid-feedback" id="visitorsError">Visitors must be a positive number greater than 0.</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="revenueInput" class="form-label">Revenue (₹ INR) <span class="required">*</span></label>
+                  <div class="input-with-icon">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                    <input type="number" id="revenueInput" class="form-control" placeholder="e.g. 750000" min="1" step="any" required>
+                  </div>
+                  <div class="form-helper">Total gross tourism, ticketing and hospitality revenue.</div>
+                  <div class="invalid-feedback" id="revenueError">Revenue must be a positive amount greater than 0.</div>
+                </div>
+              </div>
+
+              <!-- Row 3: Category & Seasonal Tag -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="categorySelect" class="form-label">Tourism Category</label>
+                  <div class="input-with-icon">
+                    <i class="fa-solid fa-tags"></i>
+                    <select id="categorySelect" class="form-select">
+                      <option value="Beach Tourism">Beach Tourism</option>
+                      <option value="Hill Stations" selected>Hill Stations</option>
+                      <option value="Cultural & Heritage">Cultural & Heritage</option>
+                      <option value="Adventure">Adventure</option>
+                      <option value="Wildlife & Nature">Wildlife & Nature</option>
+                      <option value="Others">Others</option>
+                    </select>
+                  </div>
+                  <div class="form-helper">Categorization for revenue distribution insights.</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="seasonalTag" class="form-label">Seasonal Indicator (Optional)</label>
+                  <div class="input-with-icon">
+                    <i class="fa-solid fa-cloud-sun"></i>
+                    <select id="seasonalTag" class="form-select">
+                      <option value="Normal">Normal Season</option>
+                      <option value="Peak">Peak Tourism Rush</option>
+                      <option value="Off-Season">Monsoon / Off-Season</option>
+                      <option value="Festival">Festival & Holiday Surge</option>
+                    </select>
+                  </div>
+                  <div class="form-helper">Used to normalize forecasting models.</div>
+                </div>
+              </div>
+
+              <!-- Buttons -->
+              <div class="form-actions-group">
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='dashboard.html'">Cancel</button>
+                <button type="submit" class="btn btn-primary" id="saveDataBtn">
+                  <i class="fa-solid fa-floppy-disk"></i>
+                  <span>Save Data</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Guidelines & Info Column -->
+          <div class="guidelines-card">
+            <div class="card-header" style="margin-bottom: 20px;">
+              <div class="card-title" style="font-size: 1rem;">
+                <i class="fa-solid fa-circle-info" style="color: var(--primary);"></i>
+                <span>Data Entry Guidelines</span>
+              </div>
+            </div>
+
+            <div class="guideline-item">
+              <div class="guideline-icon">
+                <i class="fa-solid fa-calculator"></i>
+              </div>
+              <div>
+                <div class="guideline-title">Certified Footfall Figures</div>
+                <div class="guideline-desc">Footfall must aggregate registered checkpoint arrivals, toll counters, and accommodation stays.</div>
+              </div>
+            </div>
+
+            <div class="guideline-item">
+              <div class="guideline-icon">
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+              </div>
+              <div>
+                <div class="guideline-title">Gross Revenue Figures</div>
+                <div class="guideline-desc">Input verified amounts in Indian Rupees (₹). This feeds directly into the predictive financial trend engines.</div>
+              </div>
+            </div>
+
+            <div class="guideline-item">
+              <div class="guideline-icon">
+                <i class="fa-solid fa-layer-group"></i>
+              </div>
+              <div>
+                <div class="guideline-title">Category Assignment</div>
+                <div class="guideline-desc">Accurate classification ensures accurate donut chart breakdown and sector investment recommendations.</div>
+              </div>
+            </div>
+
+            <div class="guideline-item">
+              <div class="guideline-icon">
+                <i class="fa-solid fa-shield-check"></i>
+              </div>
+              <div>
+                <div class="guideline-title">Audit Trail & Integrity</div>
+                <div class="guideline-desc">All entries are tagged with your administrator ID and creation timestamp for regulatory compliance.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Shared App Store & Form Script -->
+  <script src="../static/js/data.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('addDataForm');
+      const monthSelect = document.getElementById('monthSelect');
+      const yearSelect = document.getElementById('yearSelect');
+      const visitorsInput = document.getElementById('visitorsInput');
+      const revenueInput = document.getElementById('revenueInput');
+      const categorySelect = document.getElementById('categorySelect');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        let isValid = true;
+
+        // Reset inline validation classes
+        [monthSelect, yearSelect, visitorsInput, revenueInput].forEach(el => {
+          el.classList.remove('is-invalid');
+        });
+
+        // Validation: Month
+        if (!monthSelect.value) {
+          monthSelect.classList.add('is-invalid');
+          isValid = false;
+        }
+
+        // Validation: Year
+        if (!yearSelect.value) {
+          yearSelect.classList.add('is-invalid');
+          isValid = false;
+        }
+
+        // Validation: Visitors
+        const visitorsVal = parseInt(visitorsInput.value, 10);
+        if (isNaN(visitorsVal) || visitorsVal <= 0) {
+          visitorsInput.classList.add('is-invalid');
+          isValid = false;
+        }
+
+        // Validation: Revenue
+        const revenueVal = parseFloat(revenueInput.value);
+        if (isNaN(revenueVal) || revenueVal <= 0) {
+          revenueInput.classList.add('is-invalid');
+          isValid = false;
+        }
+
+        if (!isValid) return;
+
+        const saveBtn = document.getElementById('saveDataBtn');
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+        try {
+          const payload = {
+            month: monthSelect.value,
+            year: yearSelect.value,
+            visitors: visitorsVal,
+            revenue: revenueVal,
+            category: categorySelect.value
+          };
+
+          await TourismAPI.createRecord(payload);
+          showToast('Tourism data added successfully.', 'success');
+
+          // Reset form
+          form.reset();
+          monthSelect.value = '';
+          yearSelect.value = '2025';
+          categorySelect.value = 'Hill Stations';
+
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> <span>Save Data</span>';
+
+          // Optionally redirect to records after a short delay
+          setTimeout(() => {
+            window.location.href = 'records.html';
+          }, 1200);
+
+        } catch (error) {
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> <span>Save Data</span>';
+          showToast('Failed to save tourism data: ' + error.message, 'danger');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

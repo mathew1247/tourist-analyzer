@@ -1,0 +1,443 @@
+/* ==========================================================================
+   XploreElite Tourism Analytics - Full-Width Destinations Dashboard
+   Extended Hotels & Regional Destinations with Live Database Popup Modal
+   ========================================================================== */
+
+/* Full-Width Hotels & Destinations Card */
+.tv-hotels-card.full-width {
+  background: var(--bg-card, #ffffff);
+  border-radius: var(--card-radius, 18px);
+  border: 1px solid var(--border-light, #e2e8f0);
+  box-shadow: var(--shadow-card);
+  padding: 28px;
+  width: 100%;
+}
+
+.tv-hotels-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.tv-section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-navy, #1e293b);
+  margin: 0;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+}
+
+.tv-section-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted, #64748b);
+  margin: 4px 0 0 0;
+}
+
+/* Harmonized Segmented Pill Tabs */
+.tv-hotels-tabs {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-page, #f8fafc);
+  border: 1px solid var(--border-light, #e2e8f0);
+  border-radius: var(--pill-radius, 9999px);
+  padding: 4px;
+  gap: 4px;
+}
+
+.tv-tab-btn {
+  border: none;
+  background: transparent;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted, #64748b);
+  cursor: pointer;
+  padding: 7px 16px;
+  border-radius: var(--pill-radius, 9999px);
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.tv-tab-btn:hover {
+  color: var(--text-navy, #1e293b);
+}
+
+.tv-tab-btn.active {
+  background: var(--primary, #e11d48);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 2px 8px var(--primary-glow, rgba(225, 29, 72, 0.25));
+}
+
+.tv-see-all {
+  color: var(--primary, #e11d48);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--pill-radius, 9999px);
+  border: 1px solid var(--primary-border, #fecdd3);
+  background: var(--primary-light, #fff1f2);
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.tv-see-all:hover {
+  background: var(--primary, #e11d48);
+  color: #ffffff;
+  transform: translateX(2px);
+  box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+/* 5 Destination Cards Responsive Grid */
+.tv-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.tv-hotel-card {
+  position: relative;
+  height: 310px;
+  border-radius: var(--card-radius, 18px);
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+  cursor: pointer;
+  border: 1px solid var(--border-light, #e2e8f0);
+  background: #0f172a;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.tv-hotel-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px var(--primary-glow, rgba(225, 29, 72, 0.28));
+  border-color: var(--primary-border, #fecdd3);
+}
+
+.tv-hotel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.tv-hotel-card:hover .tv-hotel-img {
+  transform: scale(1.07);
+}
+
+/* Category Badge in Card Top-Left */
+.tv-hotel-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: var(--pill-radius, 9999px);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tv-hotel-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 16px 16px;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.82) 55%, rgba(15, 23, 42, 0.98) 100%);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.tv-hotel-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  line-height: 1.3;
+  color: #ffffff;
+}
+
+.tv-hotel-location {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tv-hotel-location i {
+  color: #f43f5e;
+}
+
+.tv-hotel-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.92);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 8px;
+}
+
+.tv-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tv-meta-item i.star {
+  color: #f59e0b;
+}
+
+/* --------------------------------------------------------------------------
+   Interactive Destination Details Popup Modal (Matching Master UI)
+   -------------------------------------------------------------------------- */
+.tv-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(5px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.25s ease;
+}
+
+.tv-modal-backdrop.show {
+  display: flex;
+}
+
+.tv-modal-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 26px 28px;
+  width: 92%;
+  max-width: 520px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  position: relative;
+  animation: slideUp 0.3s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.tv-modal-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  border: none;
+  color: #64748b;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast, 0.15s ease);
+  z-index: 5;
+}
+
+.tv-modal-close-btn:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.tv-modal-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 210px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.tv-modal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tv-modal-cat-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: var(--primary, #e11d48);
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: var(--pill-radius, 9999px);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tv-modal-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-navy, #1e293b);
+  letter-spacing: -0.3px;
+}
+
+.tv-modal-location-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted, #64748b);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.tv-modal-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted, #64748b);
+  line-height: 1.55;
+  margin-bottom: 18px;
+}
+
+/* 4-Stat Metric Box Grid */
+.tv-modal-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.tv-modal-stat-box {
+  background: var(--bg-page, #f8fafc);
+  border: 1px solid var(--border-light, #e2e8f0);
+  border-radius: var(--card-radius-sm, 12px);
+  padding: 12px 14px;
+}
+
+.tv-modal-stat-lbl {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted, #64748b);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tv-modal-stat-lbl i {
+  color: var(--primary, #e11d48);
+}
+
+.tv-modal-stat-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-navy, #1e293b);
+  margin-top: 3px;
+}
+
+.tv-modal-source {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  color: #9f1239;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.tv-modal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.tv-btn-primary {
+  flex: 1;
+  background: var(--primary, #e11d48);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--pill-radius, 9999px);
+  padding: 12px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.tv-btn-primary:hover {
+  background: var(--primary-hover, #be123c);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+.tv-btn-secondary {
+  flex: 1;
+  background: #ffffff;
+  color: var(--text-navy, #1e293b);
+  border: 1px solid var(--border-light, #e2e8f0);
+  border-radius: var(--pill-radius, 9999px);
+  padding: 12px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.tv-btn-secondary:hover {
+  background: var(--bg-page, #f8fafc);
+  border-color: var(--border-medium, #cbd5e1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Grid */
+@media (max-width: 1400px) {
+  .tv-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .tv-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  .tv-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .tv-hotels-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
