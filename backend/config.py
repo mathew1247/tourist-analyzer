@@ -29,3 +29,7 @@ class Config:
     FIREBASE_CREDENTIALS_PATH = os.getenv('FIREBASE_CREDENTIALS_PATH', str(base_dir / 'serviceAccountKey.json'))
     FIREBASE_CREDENTIALS_JSON = os.getenv('FIREBASE_CREDENTIALS_JSON', None)
     FIREBASE_PROJECT_ID = os.getenv('FIREBASE_PROJECT_ID', 'tourist-analyzer')
+
+    # Groq AI Assistant Settings
+    GROQ_API_KEY = os.getenv('GROQ_API_KEY', '')
+    GROQ_MODEL = os.getenv('GROQ_MODEL', 'openai/gpt-oss-120b')

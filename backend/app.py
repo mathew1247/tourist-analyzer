@@ -22,6 +22,7 @@ from backend.routes.prediction import prediction_bp
 from backend.routes.reports import reports_bp
 from backend.routes.profile import profile_bp
 from backend.routes.tourists import tourists_bp
+from backend.routes.chatbot import chatbot_bp
 
 # Define Paths for static and templates
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -52,6 +53,7 @@ def create_app():
     app.register_blueprint(reports_bp)
     app.register_blueprint(profile_bp)
     app.register_blueprint(tourists_bp)
+    app.register_blueprint(chatbot_bp)
 
 
     # ----------------------------------------------------------------------
