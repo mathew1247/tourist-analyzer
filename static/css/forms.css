@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Forms & Data Entry Styles - XploreElite
+   Forms & Data Entry Styles - XploreElite & Fig. 2 Input Design
    ========================================================================== */
 
 .form-layout-grid {
@@ -90,6 +90,178 @@
   margin-top: 2px;
 }
 
+/* ==========================================================================
+   Fig. 2 Input Design - Tourism Footfall & Revenue Form
+   ========================================================================== */
+.fig-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.fig-form-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  padding: 34px 38px;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.fig-form-title {
+  text-align: center;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-top: 0;
+  margin-bottom: 22px;
+}
+
+.fig-section-title {
+  color: #0284c7; /* Clean cyan / teal matching Fig. 2 */
+  font-size: 0.96rem;
+  font-weight: 700;
+  margin-top: 22px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fig-section-title i {
+  font-size: 0.88rem;
+  color: #0284c7;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.fig-form-card .form-group {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.fig-form-card .form-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.fig-form-card .form-control,
+.fig-form-card .form-select {
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 0.92rem;
+  color: #1e293b;
+  background-color: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.fig-form-card .form-control:focus,
+.fig-form-card .form-select:focus {
+  border-color: #0284c7;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+.fig-form-card .form-control::placeholder {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.fig-btn-group {
+  display: flex;
+  gap: 16px;
+  margin-top: 26px;
+}
+
+.btn-submit-green {
+  flex: 1;
+  background-color: #10b981;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-submit-green:hover {
+  background-color: #059669;
+}
+
+.btn-submit-green:active {
+  transform: scale(0.99);
+}
+
+.btn-reset-red {
+  flex: 1;
+  background-color: #ef4444;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-reset-red:hover {
+  background-color: #dc2626;
+}
+
+.btn-reset-red:active {
+  transform: scale(0.99);
+}
+
+/* Report Canvas Backdrop (Fig. 2 representation) */
+.report-canvas-wrapper {
+  padding: 40px 24px;
+  background: linear-gradient(135deg, #a7f3d0 0%, #e0f2fe 50%, #bae6fd 100%);
+  border-radius: 16px;
+  margin: 16px 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.fig-caption {
+  margin-top: 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+  text-align: center;
+}
+
 /* --------------------------------------------------------------------------
    Responsive Breakpoints - Forms & Data Entry
    -------------------------------------------------------------------------- */
@@ -99,62 +271,41 @@
     gap: 20px;
   }
 
-  .form-card {
+  .form-card,
+  .fig-form-card {
     padding: 24px;
   }
 }
 
 @media (max-width: 768px) {
-  .form-row {
+  .form-row,
+  .form-grid-2 {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 12px;
   }
 
-  .form-card {
-    padding: 18px 16px;
-    border-radius: var(--card-radius-sm);
+  .fig-form-card {
+    padding: 20px 16px;
   }
 
-  .guidelines-card {
-    padding: 18px 16px;
-    border-radius: var(--card-radius-sm);
+  .report-canvas-wrapper {
+    padding: 20px 12px;
   }
 
-  .form-actions-group {
-    flex-direction: column-reverse;
-    width: 100%;
+  .fig-btn-group {
+    flex-direction: column;
     gap: 10px;
-    margin-top: 24px;
-    padding-top: 18px;
   }
 
-  .form-actions-group .btn {
+  .btn-submit-green,
+  .btn-reset-red {
     width: 100%;
     min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .input-with-icon .form-control,
-  .input-with-icon .form-select {
-    font-size: 16px;
-    height: 44px;
   }
 }
 
 @media (max-width: 480px) {
-  .form-card {
-    padding: 14px 12px;
-  }
-
-  .guidelines-card {
-    padding: 14px 12px;
-  }
-}
-
-@media (max-width: 375px) {
-  .form-card {
-    padding: 12px 10px;
+  .fig-form-card {
+    padding: 16px 12px;
   }
 }

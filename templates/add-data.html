@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Tourism Data | XploreElite - Tourism Analytics Platform</title>
-  <meta name="description" content="Enter monthly tourism footfall and revenue records for corporate analytics and reporting.">
+  <title>Tourism Footfall & Revenue Form | XploreElite</title>
+  <meta name="description" content="Tourism Footfall and Revenue input form for tourist records, visit analytics, and revenue management.">
   
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -119,188 +120,163 @@
         <!-- Page Header -->
         <div class="page-header">
           <div class="page-title-group">
-            <h1>Add Tourism Data</h1>
-            <p>Enter monthly tourism footfall and revenue information.</p>
+            <h1>Tourism Footfall & Revenue Form</h1>
+            <p>Input tourist footfall information, visit locations, revenue details, and feedback analytics.</p>
           </div>
 
           <div class="page-actions">
-            <a href="records.html" class="btn btn-secondary btn-sm">
-              <i class="fa-solid fa-arrow-left"></i>
-              <span>Back to Records</span>
+            <button type="button" class="btn btn-secondary btn-sm" id="fillDemoBtn" title="Fill Sample Record">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              <span>Fill Sample</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" id="toggleCanvasBtn" title="Toggle Report Canvas Style">
+              <i class="fa-solid fa-image"></i>
+              <span>Report View</span>
+            </button>
+            <a href="records.html" class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-table-list"></i>
+              <span>View Records</span>
             </a>
           </div>
         </div>
 
-        <div class="form-layout-grid">
-          <!-- Main Form Card -->
-          <div class="card form-card">
-            <div class="card-header" style="border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px; margin-bottom: 24px;">
-              <div>
-                <div class="card-title">
-                  <i class="fa-solid fa-pen-nib" style="color: var(--primary);"></i>
-                  <span>Monthly Data Entry Form</span>
-                </div>
-                <div class="card-subtitle">All entries are audited and integrated into quarterly analytics.</div>
+        <!-- Form Wrapper Container -->
+        <div class="fig-form-wrapper" id="formWrapperContainer">
+          <!-- Card matching Fig. 2 Input Design -->
+          <div class="fig-form-card" id="figFormCard">
+            <!-- Form Title -->
+            <h2 class="fig-form-title">Tourism Footfall & Revenue Form</h2>
+
+            <form id="touristInputForm" novalidate autocomplete="off">
+              <!-- SECTION 1: Tourist Details -->
+              <div class="fig-section-title">
+                <span>Tourist Details</span>
               </div>
-            </div>
 
-            <form id="addDataForm" novalidate>
-              <!-- Row 1: Month & Year -->
-              <div class="form-row">
+              <!-- Full Name -->
+              <div class="form-group">
+                <label for="fullName" class="form-label">Full Name</label>
+                <input type="text" id="fullName" class="form-control" placeholder="Enter full name" required>
+                <div class="invalid-feedback" id="fullNameError">Please enter the tourist's full name.</div>
+              </div>
+
+              <!-- Age & Gender (2 columns) -->
+              <div class="form-grid-2">
                 <div class="form-group">
-                  <label for="monthSelect" class="form-label">Month <span class="required">*</span></label>
-                  <div class="input-with-icon">
-                    <i class="fa-regular fa-calendar"></i>
-                    <select id="monthSelect" class="form-select" required>
-                      <option value="">Select Month</option>
-                      <option value="January">January</option>
-                      <option value="February">February</option>
-                      <option value="March">March</option>
-                      <option value="April">April</option>
-                      <option value="May">May</option>
-                      <option value="June">June</option>
-                      <option value="July">July</option>
-                      <option value="August">August</option>
-                      <option value="September">September</option>
-                      <option value="October">October</option>
-                      <option value="November">November</option>
-                      <option value="December">December</option>
-                    </select>
-                  </div>
-                  <div class="invalid-feedback" id="monthError">Please select a valid month.</div>
+                  <label for="age" class="form-label">Age</label>
+                  <input type="number" id="age" class="form-control" placeholder="Enter age" min="1" max="120" required>
+                  <div class="invalid-feedback" id="ageError">Please enter a valid age.</div>
                 </div>
 
                 <div class="form-group">
-                  <label for="yearSelect" class="form-label">Year <span class="required">*</span></label>
-                  <div class="input-with-icon">
-                    <i class="fa-regular fa-calendar-days"></i>
-                    <select id="yearSelect" class="form-select" required>
-                      <option value="">Select Year</option>
-                      <option value="2026">2026</option>
-                      <option value="2025" selected>2025</option>
-                      <option value="2024">2024</option>
-                      <option value="2023">2023</option>
-                    </select>
-                  </div>
-                  <div class="invalid-feedback" id="yearError">Please select a valid year.</div>
+                  <label for="gender" class="form-label">Gender</label>
+                  <select id="gender" class="form-select" required>
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <div class="invalid-feedback" id="genderError">Please select gender.</div>
                 </div>
               </div>
 
-              <!-- Row 2: Visitors & Revenue -->
-              <div class="form-row">
+              <!-- Country -->
+              <div class="form-group">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" id="country" class="form-control" placeholder="Enter country" required>
+                <div class="invalid-feedback" id="countryError">Please enter tourist country.</div>
+              </div>
+
+              <!-- SECTION 2: Visit Details -->
+              <div class="fig-section-title">
+                <span>Visit Details</span>
+              </div>
+
+              <!-- Tourist Place -->
+              <div class="form-group">
+                <label for="touristPlace" class="form-label">Tourist Place</label>
+                <input type="text" id="touristPlace" class="form-control" placeholder="Enter location" required>
+                <div class="invalid-feedback" id="touristPlaceError">Please enter tourist destination/place.</div>
+              </div>
+
+              <!-- Date & Time (2 columns) -->
+              <div class="form-grid-2">
                 <div class="form-group">
-                  <label for="visitorsInput" class="form-label">Number of Visitors <span class="required">*</span></label>
-                  <div class="input-with-icon">
-                    <i class="fa-solid fa-users"></i>
-                    <input type="number" id="visitorsInput" class="form-control" placeholder="e.g. 4500" min="1" step="1" required>
-                  </div>
-                  <div class="form-helper">Total certified head-count/registered tourist arrivals.</div>
-                  <div class="invalid-feedback" id="visitorsError">Visitors must be a positive number greater than 0.</div>
+                  <label for="visitDate" class="form-label">Date</label>
+                  <input type="date" id="visitDate" class="form-control" required>
+                  <div class="invalid-feedback" id="visitDateError">Please select visit date.</div>
                 </div>
 
                 <div class="form-group">
-                  <label for="revenueInput" class="form-label">Revenue (₹ INR) <span class="required">*</span></label>
-                  <div class="input-with-icon">
-                    <i class="fa-solid fa-indian-rupee-sign"></i>
-                    <input type="number" id="revenueInput" class="form-control" placeholder="e.g. 750000" min="1" step="any" required>
-                  </div>
-                  <div class="form-helper">Total gross tourism, ticketing and hospitality revenue.</div>
-                  <div class="invalid-feedback" id="revenueError">Revenue must be a positive amount greater than 0.</div>
+                  <label for="visitTime" class="form-label">Time</label>
+                  <input type="time" id="visitTime" class="form-control" required>
+                  <div class="invalid-feedback" id="visitTimeError">Please select visit time.</div>
                 </div>
               </div>
 
-              <!-- Row 3: Category & Seasonal Tag -->
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="categorySelect" class="form-label">Tourism Category</label>
-                  <div class="input-with-icon">
-                    <i class="fa-solid fa-tags"></i>
-                    <select id="categorySelect" class="form-select">
-                      <option value="Beach Tourism">Beach Tourism</option>
-                      <option value="Hill Stations" selected>Hill Stations</option>
-                      <option value="Cultural & Heritage">Cultural & Heritage</option>
-                      <option value="Adventure">Adventure</option>
-                      <option value="Wildlife & Nature">Wildlife & Nature</option>
-                      <option value="Others">Others</option>
-                    </select>
-                  </div>
-                  <div class="form-helper">Categorization for revenue distribution insights.</div>
-                </div>
-
-                <div class="form-group">
-                  <label for="seasonalTag" class="form-label">Seasonal Indicator (Optional)</label>
-                  <div class="input-with-icon">
-                    <i class="fa-solid fa-cloud-sun"></i>
-                    <select id="seasonalTag" class="form-select">
-                      <option value="Normal">Normal Season</option>
-                      <option value="Peak">Peak Tourism Rush</option>
-                      <option value="Off-Season">Monsoon / Off-Season</option>
-                      <option value="Festival">Festival & Holiday Surge</option>
-                    </select>
-                  </div>
-                  <div class="form-helper">Used to normalize forecasting models.</div>
-                </div>
+              <!-- SECTION 3: Revenue Details -->
+              <div class="fig-section-title">
+                <span>Revenue Details</span>
               </div>
 
-              <!-- Buttons -->
-              <div class="form-actions-group">
-                <button type="button" class="btn btn-secondary" onclick="window.location.href='dashboard.html'">Cancel</button>
-                <button type="submit" class="btn btn-primary" id="saveDataBtn">
-                  <i class="fa-solid fa-floppy-disk"></i>
-                  <span>Save Data</span>
+              <!-- Ticket Price & Additional Spending (2 columns) -->
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="ticketPrice" class="form-label">Ticket Price (₹)</label>
+                  <input type="number" id="ticketPrice" class="form-control" placeholder="Enter ticket price" min="0" step="any" required>
+                  <div class="invalid-feedback" id="ticketPriceError">Please enter ticket price (₹).</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="additionalSpending" class="form-label">Additional Spending (₹)</label>
+                  <input type="number" id="additionalSpending" class="form-control" placeholder="Food, Shopping, etc." min="0" step="any">
+                </div>
+              </div>
+              <!-- SECTION 4: Analytics -->
+              <div class="fig-section-title">
+                <span>Analytics</span>
+              </div>
+
+              <!-- Group Type -->
+              <div class="form-group">
+                <label for="groupType" class="form-label">Group Type</label>
+                <select id="groupType" class="form-select">
+                  <option value="Individual" selected>Individual</option>
+                  <option value="Family">Family</option>
+                  <option value="Friends">Friends</option>
+                  <option value="Group">Group</option>
+                  <option value="Corporate">Corporate</option>
+                </select>
+              </div>
+
+              <!-- Number of Visitors -->
+              <div class="form-group">
+                <label for="numberOfVisitors" class="form-label">Number of Visitors</label>
+                <input type="number" id="numberOfVisitors" class="form-control" placeholder="Enter number of visitors" min="1" value="1" required>
+                <div class="invalid-feedback" id="visitorsError">Please enter number of visitors (minimum 1).</div>
+              </div>
+
+              <!-- Feedback -->
+              <div class="form-group">
+                <label for="feedback" class="form-label">Feedback</label>
+                <input type="text" id="feedback" class="form-control" placeholder="Enter feedback">
+              </div>
+
+              <!-- Buttons: Submit (Green) & Reset (Red) -->
+              <div class="fig-btn-group">
+                <button type="submit" class="btn-submit-green" id="submitFormBtn">
+                  <span>Submit</span>
+                </button>
+                <button type="reset" class="btn-reset-red" id="resetFormBtn">
+                  <span>Reset</span>
                 </button>
               </div>
             </form>
           </div>
 
-          <!-- Guidelines & Info Column -->
-          <div class="guidelines-card">
-            <div class="card-header" style="margin-bottom: 20px;">
-              <div class="card-title" style="font-size: 1rem;">
-                <i class="fa-solid fa-circle-info" style="color: var(--primary);"></i>
-                <span>Data Entry Guidelines</span>
-              </div>
-            </div>
-
-            <div class="guideline-item">
-              <div class="guideline-icon">
-                <i class="fa-solid fa-calculator"></i>
-              </div>
-              <div>
-                <div class="guideline-title">Certified Footfall Figures</div>
-                <div class="guideline-desc">Footfall must aggregate registered checkpoint arrivals, toll counters, and accommodation stays.</div>
-              </div>
-            </div>
-
-            <div class="guideline-item">
-              <div class="guideline-icon">
-                <i class="fa-solid fa-indian-rupee-sign"></i>
-              </div>
-              <div>
-                <div class="guideline-title">Gross Revenue Figures</div>
-                <div class="guideline-desc">Input verified amounts in Indian Rupees (₹). This feeds directly into the predictive financial trend engines.</div>
-              </div>
-            </div>
-
-            <div class="guideline-item">
-              <div class="guideline-icon">
-                <i class="fa-solid fa-layer-group"></i>
-              </div>
-              <div>
-                <div class="guideline-title">Category Assignment</div>
-                <div class="guideline-desc">Accurate classification ensures accurate donut chart breakdown and sector investment recommendations.</div>
-              </div>
-            </div>
-
-            <div class="guideline-item">
-              <div class="guideline-icon">
-                <i class="fa-solid fa-shield-check"></i>
-              </div>
-              <div>
-                <div class="guideline-title">Audit Trail & Integrity</div>
-                <div class="guideline-desc">All entries are tagged with your administrator ID and creation timestamp for regulatory compliance.</div>
-              </div>
-            </div>
+          <!-- Optional Report Caption (visible in Report View mode) -->
+          <div class="fig-caption" id="figCaption" style="display: none;">
+            Fig. 2. Input design
           </div>
         </div>
       </main>
@@ -311,84 +287,225 @@
   <script src="../static/js/data.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('addDataForm');
-      const monthSelect = document.getElementById('monthSelect');
-      const yearSelect = document.getElementById('yearSelect');
-      const visitorsInput = document.getElementById('visitorsInput');
-      const revenueInput = document.getElementById('revenueInput');
-      const categorySelect = document.getElementById('categorySelect');
+      const form = document.getElementById('touristInputForm');
+      const fullNameInput = document.getElementById('fullName');
+      const ageInput = document.getElementById('age');
+      const genderSelect = document.getElementById('gender');
+      const countryInput = document.getElementById('country');
+      const touristPlaceInput = document.getElementById('touristPlace');
+      const visitDateInput = document.getElementById('visitDate');
+      const visitTimeInput = document.getElementById('visitTime');
+      const ticketPriceInput = document.getElementById('ticketPrice');
+      const additionalSpendingInput = document.getElementById('additionalSpending');
+      const groupTypeSelect = document.getElementById('groupType');
+      const numberOfVisitorsInput = document.getElementById('numberOfVisitors');
+      const feedbackInput = document.getElementById('feedback');
+      const submitBtn = document.getElementById('submitFormBtn');
+      const resetBtn = document.getElementById('resetFormBtn');
+      const fillDemoBtn = document.getElementById('fillDemoBtn');
+      const toggleCanvasBtn = document.getElementById('toggleCanvasBtn');
+      const wrapperContainer = document.getElementById('formWrapperContainer');
+      const figCaption = document.getElementById('figCaption');
 
+      // Set default Date to today and default Time to current time
+      const initDateTimeDefaults = () => {
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        if (!visitDateInput.value) {
+          visitDateInput.value = `${yyyy}-${mm}-${dd}`;
+        }
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        if (!visitTimeInput.value) {
+          visitTimeInput.value = `${hours}:${minutes}`;
+        }
+      };
+      initDateTimeDefaults();
+
+      // Reset button handler
+      resetBtn.addEventListener('click', (e) => {
+        // Allow standard reset, then restore clean state
+        setTimeout(() => {
+          form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+          initDateTimeDefaults();
+          groupTypeSelect.value = 'Individual';
+          numberOfVisitorsInput.value = '1';
+          showToast('Form fields cleared.', 'info');
+        }, 50);
+      });
+
+      // Fill Demo Sample Data handler
+      fillDemoBtn.addEventListener('click', () => {
+        fullNameInput.value = 'Kanishka Sharma';
+        ageInput.value = '26';
+        genderSelect.value = 'Female';
+        countryInput.value = 'India';
+        touristPlaceInput.value = 'Manali Solang Valley';
+        visitDateInput.value = new Date().toISOString().split('T')[0];
+        visitTimeInput.value = '10:30';
+        ticketPriceInput.value = '500';
+        additionalSpendingInput.value = '1450';
+        groupTypeSelect.value = 'Friends';
+        numberOfVisitorsInput.value = '3';
+        feedbackInput.value = 'Breathtaking snowfall and pristine views!';
+
+        form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+        showToast('Sample tourist details loaded.', 'success');
+      });
+
+      // Toggle Report Canvas Mode (Matches Fig. 2 background)
+      let canvasMode = false;
+      toggleCanvasBtn.addEventListener('click', () => {
+        canvasMode = !canvasMode;
+        if (canvasMode) {
+          wrapperContainer.classList.add('report-canvas-wrapper');
+          figCaption.style.display = 'block';
+          toggleCanvasBtn.innerHTML = '<i class="fa-solid fa-compress"></i> <span>Normal View</span>';
+          showToast('Switched to Report Canvas view (Fig. 2 representation).', 'info');
+        } else {
+          wrapperContainer.classList.remove('report-canvas-wrapper');
+          figCaption.style.display = 'none';
+          toggleCanvasBtn.innerHTML = '<i class="fa-solid fa-image"></i> <span>Report View</span>';
+        }
+      });
+
+      // Form Submission
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         let isValid = true;
 
         // Reset inline validation classes
-        [monthSelect, yearSelect, visitorsInput, revenueInput].forEach(el => {
-          el.classList.remove('is-invalid');
-        });
+        form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
 
-        // Validation: Month
-        if (!monthSelect.value) {
-          monthSelect.classList.add('is-invalid');
+        // Validate Full Name
+        if (!fullNameInput.value.trim()) {
+          fullNameInput.classList.add('is-invalid');
           isValid = false;
         }
 
-        // Validation: Year
-        if (!yearSelect.value) {
-          yearSelect.classList.add('is-invalid');
+        // Validate Age
+        const ageVal = parseInt(ageInput.value, 10);
+        if (isNaN(ageVal) || ageVal <= 0 || ageVal > 120) {
+          ageInput.classList.add('is-invalid');
           isValid = false;
         }
 
-        // Validation: Visitors
-        const visitorsVal = parseInt(visitorsInput.value, 10);
-        if (isNaN(visitorsVal) || visitorsVal <= 0) {
-          visitorsInput.classList.add('is-invalid');
+        // Validate Gender
+        if (!genderSelect.value) {
+          genderSelect.classList.add('is-invalid');
           isValid = false;
         }
 
-        // Validation: Revenue
-        const revenueVal = parseFloat(revenueInput.value);
-        if (isNaN(revenueVal) || revenueVal <= 0) {
-          revenueInput.classList.add('is-invalid');
+        // Validate Country
+        if (!countryInput.value.trim()) {
+          countryInput.classList.add('is-invalid');
           isValid = false;
         }
 
-        if (!isValid) return;
+        // Validate Tourist Place
+        if (!touristPlaceInput.value.trim()) {
+          touristPlaceInput.classList.add('is-invalid');
+          isValid = false;
+        }
 
-        const saveBtn = document.getElementById('saveDataBtn');
-        saveBtn.disabled = true;
-        saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+        // Validate Visit Date
+        if (!visitDateInput.value) {
+          visitDateInput.classList.add('is-invalid');
+          isValid = false;
+        }
+
+        // Validate Visit Time
+        if (!visitTimeInput.value) {
+          visitTimeInput.classList.add('is-invalid');
+          isValid = false;
+        }
+
+        // Validate Ticket Price
+        const ticketPriceVal = parseFloat(ticketPriceInput.value);
+        if (isNaN(ticketPriceVal) || ticketPriceVal < 0) {
+          ticketPriceInput.classList.add('is-invalid');
+          isValid = false;
+        }
+
+        // Additional Spending (defaults to 0 if empty)
+        const addSpendVal = parseFloat(additionalSpendingInput.value) || 0;
+
+        // Validate Number of Visitors
+        const visitorsVal = parseInt(numberOfVisitorsInput.value, 10);
+        if (isNaN(visitorsVal) || visitorsVal < 1) {
+          numberOfVisitorsInput.classList.add('is-invalid');
+          isValid = false;
+        }
+
+        if (!isValid) {
+          showToast('Please fill all required fields properly.', 'danger');
+          return;
+        }
+
+        // Calculate total revenue
+        const calculatedTotalRevenue = (ticketPriceVal * visitorsVal) + addSpendVal;
+
+        // Construct tourist entry payload
+        const entryPayload = {
+          fullName: fullNameInput.value.trim(),
+          age: ageVal,
+          gender: genderSelect.value,
+          country: countryInput.value.trim(),
+          touristPlace: touristPlaceInput.value.trim(),
+          location: touristPlaceInput.value.trim(),
+          visitDate: visitDateInput.value,
+          date: visitDateInput.value,
+          visitTime: visitTimeInput.value,
+          time: visitTimeInput.value,
+          ticketPrice: ticketPriceVal,
+          additionalSpending: addSpendVal,
+          groupType: groupTypeSelect.value,
+          numberOfVisitors: visitorsVal,
+          visitorCount: visitorsVal,
+          visitors: visitorsVal,
+          feedback: feedbackInput.value.trim(),
+          revenue: calculatedTotalRevenue,
+          totalRevenue: calculatedTotalRevenue
+        };
+
+        // UI Saving State
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Submitting...</span>';
 
         try {
-          const payload = {
-            month: monthSelect.value,
-            year: yearSelect.value,
-            visitors: visitorsVal,
-            revenue: revenueVal,
-            category: categorySelect.value
-          };
+          if (typeof TourismAPI !== 'undefined' && TourismAPI.saveTouristEntry) {
+            await TourismAPI.saveTouristEntry(entryPayload);
+          } else {
+            // LocalStorage fallback
+            const entries = JSON.parse(localStorage.getItem('tourist_entries') || '[]');
+            entries.unshift({ id: Date.now(), ...entryPayload });
+            localStorage.setItem('tourist_entries', JSON.stringify(entries));
+          }
 
-          await TourismAPI.createRecord(payload);
-          showToast('Tourism data added successfully.', 'success');
+          showToast('Tourist footfall and revenue data submitted successfully!', 'success');
 
-          // Reset form
+          // Reset form to defaults
           form.reset();
-          monthSelect.value = '';
-          yearSelect.value = '2025';
-          categorySelect.value = 'Hill Stations';
+          initDateTimeDefaults();
+          groupTypeSelect.value = 'Individual';
+          numberOfVisitorsInput.value = '1';
 
-          saveBtn.disabled = false;
-          saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> <span>Save Data</span>';
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Submit</span>';
 
-          // Optionally redirect to records after a short delay
+          // Optional delayed redirect or alert
           setTimeout(() => {
-            window.location.href = 'records.html';
-          }, 1200);
+            if (confirm('Entry submitted! Would you like to view the updated Tourism Records table now?')) {
+              window.location.href = 'records.html';
+            }
+          }, 600);
 
         } catch (error) {
-          saveBtn.disabled = false;
-          saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> <span>Save Data</span>';
-          showToast('Failed to save tourism data: ' + error.message, 'danger');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Submit</span>';
+          showToast('Submission error: ' + error.message, 'danger');
         }
       });
     });

@@ -1129,3 +1129,133 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+
+// ==========================================================================
+// Tourist Entries Extensions for Fig. 2 Form Design
+// ==========================================================================
+if (typeof TourismAPI !== 'undefined') {
+  TourismAPI.saveTouristEntry = async function(entry) {
+    try {
+      const res = await fetch(API_BASE + '/api/tourists', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry)
+      });
+      if (res.ok) {
+        const json = await res.json();
+        if (json.id) entry.id = json.id;
+      }
+    } catch (e) {
+      console.log('Using local storage for tourist entry');
+    }
+
+    const entries = JSON.parse(localStorage.getItem('tourist_entries') || '[]');
+    if (!entry.id) entry.id = Date.now();
+    entries.unshift(entry);
+    localStorage.setItem('tourist_entries', JSON.stringify(entries));
+
+    try {
+      const visitDate = entry.visitDate || entry.date || new Date().toISOString().split('T')[0];
+      const parts = visitDate.split('-');
+      const year = parseInt(parts[0], 10) || 2026;
+      const monthIdx = (parseInt(parts[1], 10) || 1) - 1;
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const month = monthNames[monthIdx] || 'October';
+      const visitors = parseInt(entry.numberOfVisitors || entry.visitorCount || 1, 10);
+      const revenue = parseFloat(entry.totalRevenue || entry.revenue || 0);
+
+      const records = JSON.parse(localStorage.getItem('tourism_records') || '[]');
+      const matchIdx = records.findIndex(r => r.month === month && parseInt(r.year, 10) === year);
+      if (matchIdx !== -1) {
+        records[matchIdx].visitors = (records[matchIdx].visitors || 0) + visitors;
+        records[matchIdx].revenue = (records[matchIdx].revenue || 0) + revenue;
+      } else {
+        records.push({
+          id: Date.now() + 1,
+          month: month,
+          year: year,
+          visitors: visitors,
+          revenue: revenue,
+          category: 'Hill Stations',
+          created_at: visitDate
+        });
+      }
+      localStorage.setItem('tourism_records', JSON.stringify(records));
+    } catch (syncErr) {
+      console.error('Error syncing monthly record:', syncErr);
+    }
+
+    return entry;
+  };
+
+  TourismAPI.getTouristEntries = async function() {
+    try {
+      const res = await fetch(API_BASE + '/api/tourists');
+      if (res.ok) {
+        const json = await res.json();
+        const arr = Array.isArray(json) ? json : (json.data || []);
+        if (arr.length > 0) return arr;
+      }
+    } catch (e) {
+      // offline fallback
+    }
+    return JSON.parse(localStorage.getItem('tourist_entries') || '[]');
+  };
+}
+
+if (typeof localStorage !== 'undefined' && !localStorage.getItem('tourist_entries')) {
+  localStorage.setItem('tourist_entries', JSON.stringify([
+    {
+      id: 101,
+      fullName: 'Rahul Sharma',
+      age: 28,
+      gender: 'Male',
+      country: 'India',
+      touristPlace: 'Manali Solang Valley',
+      visitDate: '2026-10-14',
+      visitTime: '09:30',
+      ticketPrice: 500,
+      additionalSpending: 1200,
+      groupType: 'Individual',
+      numberOfVisitors: 1,
+      feedback: 'Scenic landscapes and wonderful mountain sports.',
+      totalRevenue: 1700,
+      created_at: '2026-10-14'
+    },
+    {
+      id: 102,
+      fullName: 'Sophia Williams',
+      age: 32,
+      gender: 'Female',
+      country: 'United Kingdom',
+      touristPlace: 'Goa Calangute Beach',
+      visitDate: '2026-10-18',
+      visitTime: '15:45',
+      ticketPrice: 350,
+      additionalSpending: 2600,
+      groupType: 'Friends',
+      numberOfVisitors: 3,
+      feedback: 'Vibrant sunset atmosphere and delicious local seafood.',
+      totalRevenue: 3650,
+      created_at: '2026-10-18'
+    },
+    {
+      id: 103,
+      fullName: 'Amit Patel',
+      age: 41,
+      gender: 'Male',
+      country: 'India',
+      touristPlace: 'Ooty Botanical Garden',
+      visitDate: '2026-10-21',
+      visitTime: '11:20',
+      ticketPrice: 250,
+      additionalSpending: 1800,
+      groupType: 'Family',
+      numberOfVisitors: 4,
+      feedback: 'Beautiful botanical arrangements and serene gardens.',
+      totalRevenue: 2800,
+      created_at: '2026-10-21'
+    }
+  ]));
+}

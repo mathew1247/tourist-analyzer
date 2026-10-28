@@ -242,6 +242,44 @@ def init_db():
         """)
 
         cursor.execute("""
+            CREATE TABLE IF NOT EXISTS tourist_entries (
+                id INTEGER PRIMARY KEY AUTO_INCREMENT,
+                full_name VARCHAR(150) NOT NULL,
+                age INT,
+                gender VARCHAR(20),
+                country VARCHAR(100),
+                tourist_place VARCHAR(150) NOT NULL,
+                visit_date VARCHAR(30),
+                visit_time VARCHAR(20),
+                ticket_price DECIMAL(10,2) DEFAULT 0.00,
+                additional_spending DECIMAL(10,2) DEFAULT 0.00,
+                group_type VARCHAR(50) DEFAULT 'Individual',
+                number_of_visitors INT DEFAULT 1,
+                feedback TEXT,
+                total_revenue DECIMAL(12,2) DEFAULT 0.00,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """ if is_using_mysql() else """
+            CREATE TABLE IF NOT EXISTS tourist_entries (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                full_name TEXT NOT NULL,
+                age INTEGER,
+                gender TEXT,
+                country TEXT,
+                tourist_place TEXT NOT NULL,
+                visit_date TEXT,
+                visit_time TEXT,
+                ticket_price REAL DEFAULT 0.00,
+                additional_spending REAL DEFAULT 0.00,
+                group_type TEXT DEFAULT 'Individual',
+                number_of_visitors INTEGER DEFAULT 1,
+                feedback TEXT,
+                total_revenue REAL DEFAULT 0.00,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+
+        cursor.execute("""
             CREATE TABLE IF NOT EXISTS user_logs (
                 id INTEGER PRIMARY KEY AUTO_INCREMENT,
                 user_id INT NULL,

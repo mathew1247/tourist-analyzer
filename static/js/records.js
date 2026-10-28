@@ -1,25 +1,36 @@
 /**
  * XploreElite - Tourism Records Management
+ * Supports both Monthly Analytics and Individual Tourist Footfall Entries (Fig. 2)
  */
 
+let currentTab = 'monthly'; // 'monthly' | 'tourists'
 let recordsData = [];
+let touristEntriesData = [];
 let currentPage = 1;
 const pageSize = 8;
 let deleteTargetId = null;
+let deleteTargetType = 'monthly'; // 'monthly' | 'tourist'
 
 document.addEventListener('DOMContentLoaded', async () => {
   // Read URL params (e.g. from global search or dashboard edit button)
   const urlParams = new URLSearchParams(window.location.search);
   const searchParam = urlParams.get('search');
   const editParam = urlParams.get('edit');
+  const viewParam = urlParams.get('view');
 
   if (searchParam) {
     const searchInput = document.getElementById('recordSearch');
     if (searchInput) searchInput.value = searchParam;
   }
 
-  await loadRecords();
+  setupTabListeners();
   setupFilterListeners();
+
+  if (viewParam === 'tourists') {
+    switchTab('tourists');
+  } else {
+    await loadRecords();
+  }
 
   if (editParam) {
     setTimeout(() => {
@@ -27,6 +38,45 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, 300);
   }
 });
+
+function setupTabListeners() {
+  const viewMonthlyBtn = document.getElementById('viewMonthlyBtn');
+  const viewTouristsBtn = document.getElementById('viewTouristsBtn');
+
+  if (viewMonthlyBtn) {
+    viewMonthlyBtn.addEventListener('click', () => switchTab('monthly'));
+  }
+  if (viewTouristsBtn) {
+    viewTouristsBtn.addEventListener('click', () => switchTab('tourists'));
+  }
+}
+
+async function switchTab(tab) {
+  currentTab = tab;
+  currentPage = 1;
+
+  const viewMonthlyBtn = document.getElementById('viewMonthlyBtn');
+  const viewTouristsBtn = document.getElementById('viewTouristsBtn');
+  const yearFilter = document.getElementById('yearFilter');
+  const monthFilter = document.getElementById('monthFilter');
+  const categoryFilter = document.getElementById('categoryFilter');
+
+  if (tab === 'monthly') {
+    if (viewMonthlyBtn) { viewMonthlyBtn.className = 'btn btn-primary btn-sm'; }
+    if (viewTouristsBtn) { viewTouristsBtn.className = 'btn btn-secondary btn-sm'; }
+    if (yearFilter) yearFilter.style.display = 'inline-block';
+    if (monthFilter) monthFilter.style.display = 'inline-block';
+    if (categoryFilter) categoryFilter.style.display = 'inline-block';
+    await loadRecords();
+  } else {
+    if (viewMonthlyBtn) { viewMonthlyBtn.className = 'btn btn-secondary btn-sm'; }
+    if (viewTouristsBtn) { viewTouristsBtn.className = 'btn btn-primary btn-sm'; }
+    if (yearFilter) yearFilter.style.display = 'none';
+    if (monthFilter) monthFilter.style.display = 'none';
+    if (categoryFilter) categoryFilter.style.display = 'none';
+    await loadTouristEntries();
+  }
+}
 
 async function loadRecords() {
   try {
@@ -36,6 +86,27 @@ async function loadRecords() {
   } catch (error) {
     console.error('Error loading records:', error);
     showToast('Failed to load tourism records.', 'danger');
+  }
+}
+
+async function loadTouristEntries() {
+  try {
+    const searchVal = (document.getElementById('recordSearch')?.value || '').trim().toLowerCase();
+    let entries = await TourismAPI.getTouristEntries();
+
+    if (searchVal) {
+      entries = entries.filter(e => 
+        (e.fullName && e.fullName.toLowerCase().includes(searchVal)) ||
+        (e.touristPlace && e.touristPlace.toLowerCase().includes(searchVal)) ||
+        (e.country && e.country.toLowerCase().includes(searchVal)) ||
+        (e.groupType && e.groupType.toLowerCase().includes(searchVal))
+      );
+    }
+    touristEntriesData = entries;
+    renderTouristsTable();
+  } catch (error) {
+    console.error('Error loading tourist entries:', error);
+    showToast('Failed to load tourist entries.', 'danger');
   }
 }
 
@@ -49,13 +120,30 @@ function getActiveFilters() {
 }
 
 function renderTable() {
+  const table = document.querySelector('.data-table');
   const tbody = document.getElementById('recordsTableBody');
   const emptyState = document.getElementById('emptyState');
   const tableWrapper = document.getElementById('tableContentWrapper');
   const countText = document.getElementById('recordsCountText');
   const pagination = document.getElementById('recordsPagination');
 
-  if (!tbody) return;
+  if (!tbody || !table) return;
+
+  // Set Monthly Headers
+  const thead = table.querySelector('thead');
+  if (thead) {
+    thead.innerHTML = `
+      <tr>
+        <th>Month</th>
+        <th>Year</th>
+        <th>Visitors</th>
+        <th>Revenue</th>
+        <th>Category</th>
+        <th>Created Date</th>
+        <th>Actions</th>
+      </tr>
+    `;
+  }
 
   const total = recordsData.length;
 
@@ -103,7 +191,106 @@ function renderTable() {
           <button class="btn-icon edit" onclick="openEditModal(${r.id})" title="Edit Record">
             <i class="fa-regular fa-pen-to-square"></i>
           </button>
-          <button class="btn-icon delete" onclick="confirmDeleteRecord(${r.id})" title="Delete Record">
+          <button class="btn-icon delete" onclick="confirmDeleteRecord(${r.id}, 'monthly')" title="Delete Record">
+            <i class="fa-regular fa-trash-can"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+
+  renderPagination(totalPages);
+}
+
+function renderTouristsTable() {
+  const table = document.querySelector('.data-table');
+  const tbody = document.getElementById('recordsTableBody');
+  const emptyState = document.getElementById('emptyState');
+  const tableWrapper = document.getElementById('tableContentWrapper');
+  const countText = document.getElementById('recordsCountText');
+  const pagination = document.getElementById('recordsPagination');
+
+  if (!tbody || !table) return;
+
+  // Set Tourist Entries Headers (Matching Fig. 2 contents)
+  const thead = table.querySelector('thead');
+  if (thead) {
+    thead.innerHTML = `
+      <tr>
+        <th>Tourist Name</th>
+        <th>Age / Gender</th>
+        <th>Tourist Place</th>
+        <th>Date & Time</th>
+        <th>Visitors</th>
+        <th>Ticket (₹)</th>
+        <th>Total Revenue (₹)</th>
+        <th>Group Type</th>
+        <th>Feedback</th>
+        <th>Actions</th>
+      </tr>
+    `;
+  }
+
+  const total = touristEntriesData.length;
+
+  if (total === 0) {
+    if (tableWrapper) tableWrapper.style.display = 'none';
+    if (emptyState) emptyState.style.display = 'block';
+    if (countText) countText.textContent = 'Showing 0 tourist entries';
+    if (pagination) pagination.innerHTML = '';
+    return;
+  }
+
+  if (tableWrapper) tableWrapper.style.display = 'block';
+  if (emptyState) emptyState.style.display = 'none';
+
+  const totalPages = Math.ceil(total / pageSize);
+  if (currentPage > totalPages) currentPage = totalPages || 1;
+  const startIdx = (currentPage - 1) * pageSize;
+  const endIdx = Math.min(startIdx + pageSize, total);
+
+  if (countText) {
+    countText.textContent = `Showing ${startIdx + 1}–${endIdx} of ${total} tourist entries`;
+  }
+
+  const pageEntries = touristEntriesData.slice(startIdx, endIdx);
+
+  tbody.innerHTML = pageEntries.map(e => `
+    <tr data-id="${e.id}">
+      <td>
+        <div style="font-weight: 700; color: var(--text-navy);">${e.fullName || e.name || 'Tourist'}</div>
+        <div style="font-size: 0.78rem; color: var(--text-muted);"><i class="fa-solid fa-earth-asia"></i> ${e.country || 'India'}</div>
+      </td>
+      <td>
+        <span style="font-weight: 600;">${e.age || '-'} yrs</span>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">(${e.gender || '-'})</span>
+      </td>
+      <td style="font-weight: 600; color: #0284c7;">
+        <i class="fa-solid fa-location-dot" style="font-size: 0.8rem; margin-right: 4px;"></i>
+        ${e.touristPlace || e.location || 'Location'}
+      </td>
+      <td>
+        <div style="font-weight: 600;">${e.visitDate || e.date || '-'}</div>
+        <div style="font-size: 0.78rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> ${e.visitTime || e.time || '10:00'}</div>
+      </td>
+      <td>
+        <span style="font-weight: 700;">${e.numberOfVisitors || e.visitorCount || 1}</span>
+      </td>
+      <td>
+        <span>₹ ${e.ticketPrice || 0}</span>
+      </td>
+      <td style="font-weight: 700; color: #10b981;">
+        ₹ ${formatNumber(e.totalRevenue || e.revenue || 0)}
+      </td>
+      <td>
+        <span class="badge badge-primary">${e.groupType || 'Individual'}</span>
+      </td>
+      <td style="max-width: 180px; font-size: 0.82rem; color: var(--text-muted); text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" title="${e.feedback || ''}">
+        ${e.feedback || '—'}
+      </td>
+      <td>
+        <div class="action-btn-group">
+          <button class="btn-icon delete" onclick="confirmDeleteRecord(${e.id}, 'tourist')" title="Delete Entry">
             <i class="fa-regular fa-trash-can"></i>
           </button>
         </div>
@@ -154,7 +341,11 @@ function renderPagination(totalPages) {
 
 function goToPage(page) {
   currentPage = page;
-  renderTable();
+  if (currentTab === 'monthly') {
+    renderTable();
+  } else {
+    renderTouristsTable();
+  }
 }
 
 function setupFilterListeners() {
@@ -166,7 +357,11 @@ function setupFilterListeners() {
 
   const onFilterChange = async () => {
     currentPage = 1;
-    await loadRecords();
+    if (currentTab === 'monthly') {
+      await loadRecords();
+    } else {
+      await loadTouristEntries();
+    }
   };
 
   if (searchInput) {
@@ -183,7 +378,11 @@ function setupFilterListeners() {
       if (monthFilter) monthFilter.value = 'all';
       if (categoryFilter) categoryFilter.value = 'all';
       currentPage = 1;
-      await loadRecords();
+      if (currentTab === 'monthly') {
+        await loadRecords();
+      } else {
+        await loadTouristEntries();
+      }
     });
   }
 }
@@ -220,7 +419,6 @@ async function openEditModal(id) {
     document.getElementById('editRevenue').value = record.revenue;
     document.getElementById('editCategory').value = record.category || 'Hill Stations';
 
-    // Reset validations
     ['editMonth', 'editYear', 'editVisitors', 'editRevenue'].forEach(fId => {
       document.getElementById(fId)?.classList.remove('is-invalid');
     });
@@ -260,8 +458,9 @@ async function handleEditFormSubmit(e) {
 }
 
 // Delete Record
-function confirmDeleteRecord(id) {
+function confirmDeleteRecord(id, type = 'monthly') {
   deleteTargetId = id;
+  deleteTargetType = type;
   const modal = document.getElementById('deleteConfirmModal');
   modal.classList.add('show');
 }
@@ -269,11 +468,19 @@ function confirmDeleteRecord(id) {
 async function executeDelete() {
   if (!deleteTargetId) return;
   try {
-    await TourismAPI.deleteRecord(deleteTargetId);
+    if (deleteTargetType === 'tourist') {
+      let entries = JSON.parse(localStorage.getItem('tourist_entries') || '[]');
+      entries = entries.filter(e => String(e.id) !== String(deleteTargetId));
+      localStorage.setItem('tourist_entries', JSON.stringify(entries));
+      showToast('Tourist entry deleted successfully.', 'success');
+      await loadTouristEntries();
+    } else {
+      await TourismAPI.deleteRecord(deleteTargetId);
+      showToast('Record deleted successfully.', 'success');
+      await loadRecords();
+    }
     deleteTargetId = null;
     closeModals();
-    showToast('Record deleted successfully.', 'success');
-    await loadRecords();
   } catch (err) {
     showToast('Failed to delete record.', 'danger');
   }

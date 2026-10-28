@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/x-icon" href="../static/images/favicon.ico">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tourism Records | XploreElite - Tourism Analytics Platform</title>
@@ -132,8 +133,18 @@
           </div>
         </div>
 
+        <!-- View Toggle Switch -->
+        <div style="display: flex; gap: 10px; margin-bottom: 16px;">
+          <button type="button" class="btn btn-primary btn-sm" id="viewMonthlyBtn">
+            <i class="fa-solid fa-calendar-days"></i> <span>Monthly Analytics</span>
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" id="viewTouristsBtn">
+            <i class="fa-solid fa-users"></i> <span>Tourist Form Entries</span>
+          </button>
+        </div>
+
         <!-- Filter Bar Card -->
-        <div class="filter-bar-card">
+        <div class="filter-bar-card" id="filterBarCard">
           <div class="filters-flex-wrap">
             <div class="filters-left">
               <!-- Search -->

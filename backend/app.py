@@ -59,6 +59,11 @@ def create_app():
     # ----------------------------------------------------------------------
     # System & Health Check Endpoints
     # ----------------------------------------------------------------------
+
+    @app.route('/favicon.ico')
+    def favicon():
+        return send_from_directory(STATIC_FOLDER + '/images', 'favicon.ico', mimetype='image/x-icon')
+
     @app.route('/api/health', methods=['GET'])
     def health_check():
         """Health check endpoint."""

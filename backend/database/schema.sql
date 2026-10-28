@@ -46,7 +46,28 @@ CREATE TABLE IF NOT EXISTS monthly_analytics (
 );
 
 -- -------------------------------------------------------------------------
--- TABLE 4: user_logs (Audit / Log Table)
+-- TABLE 4: tourist_entries (Fig. 2 Input Design Form Data)
+-- -------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS tourist_entries (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    full_name VARCHAR(150) NOT NULL,
+    age INT,
+    gender VARCHAR(20),
+    country VARCHAR(100),
+    tourist_place VARCHAR(150) NOT NULL,
+    visit_date DATE,
+    visit_time VARCHAR(20),
+    ticket_price DECIMAL(10,2) DEFAULT 0.00,
+    additional_spending DECIMAL(10,2) DEFAULT 0.00,
+    group_type VARCHAR(50) DEFAULT 'Individual',
+    number_of_visitors INT DEFAULT 1,
+    feedback TEXT,
+    total_revenue DECIMAL(12,2) DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- -------------------------------------------------------------------------
+-- TABLE 5: user_logs (Audit / Log Table)
 -- -------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS user_logs (
     id INT PRIMARY KEY AUTO_INCREMENT,
